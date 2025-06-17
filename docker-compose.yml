@@ -11,7 +11,8 @@ services:
       - SPRING_DATASOURCE_USERNAME=app_user
       - SPRING_DATASOURCE_PASSWORD=app_pass
     depends_on:
-      - db_container
+      db_container:
+        condition: service_healthy # db_containerのhealthckeckの条件を満たしたらbackendを起動する
 
   db_container:
     image: mysql:8.0
@@ -26,6 +27,11 @@ services:
       - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     ports:
       - "4306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   db_data:
