@@ -23,6 +23,9 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      'no-undef': 'error', // 未定義の変数をエラーにする
+      'no-unused-vars': 'warn', // 未使用の変数を警告にする
+      'react/prop-types': 'off' // react特有の型定義ルールをオフ（代わりにTypeScript使用）
     },
   },
 )
