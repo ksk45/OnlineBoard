@@ -12,8 +12,9 @@ const AuthPage = () => {
       <div className="max-w-md w-full space-y-8 mx-auto">
         <AuthHeader authMode={authMode}/>
         <div></div>
-        <div className="bg-white">AuthPage</div>
-        <AuthMainButton authMode={authMode}/>
+        <div className="bg-white">
+          <AuthMainButton authMode={authMode}/>
+        </div>
       </div>
     </div>
   )
