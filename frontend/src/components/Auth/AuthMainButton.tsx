@@ -1,25 +1,12 @@
+import UIButton from "../ui/UIButton";
 import { LogIn, User, UserPlus } from "lucide-react";
-import { tv } from "tailwind-variants";
 import type { AuthMode } from "../../types/auth";
 
 type AuthMainButtonProps = {
   authMode: AuthMode;
 };
 
-const styles = tv({
-  base: "w-full h-10 mx-auto bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl text-white flex items-center justify-center space-x-2",
-  variants: {
-    authMode: {
-      signIn: "from-blue-500 to-purple-600",
-      signUp: "from-green-500 to-teal-600",
-      guest: "from-orange-500 to-pink-600",
-    },
-  },
-  defaultVariants: {
-    authMode: "signIn",
-  },
-});
-
+// ボタンラベル定義
 const getButtonLabel = (authMode: AuthMode) => {
   switch (authMode) {
     case "signIn":
@@ -46,11 +33,21 @@ const getButtonLabel = (authMode: AuthMode) => {
   }
 };
 
+// ボタンごとのスタイル定義
+const getButtonGradient: Record<AuthMode, string> = {
+  signIn: "from-blue-500 to-purple-600",
+  signUp: "from-green-500 to-teal-600",
+  guest: "from-orange-500 to-pink-600",
+};
+
 const AuthMainButton = ({ authMode }: AuthMainButtonProps) => {
   return (
-    <button type="button" className={styles({ authMode })}>
+    <UIButton
+      className={`text-white bg-gradient-to-r ${getButtonGradient[authMode]}`}
+      type="button"
+    >
       {getButtonLabel(authMode)}
-    </button>
+    </UIButton>
   );
 };
 
