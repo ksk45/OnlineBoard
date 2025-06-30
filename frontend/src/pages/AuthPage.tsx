@@ -3,6 +3,7 @@ import AuthHeader from "../components/Auth/AuthHeader";
 import AuthInput from "../components/Auth/AuthInput";
 import AuthMainButton from "../components/Auth/AuthMainButton";
 import type { AuthMode } from "../types/auth";
+import AuthSubActions from "../components/Auth/AuthSubActions";
 
 const AuthPage = () => {
   const [authMode, setAuthMode] = useState<AuthMode>("signIn");
@@ -11,8 +12,8 @@ const AuthPage = () => {
   // サインイン
   const signInForm = () => (
     <>
-      <AuthInput type="email" />
-      <AuthInput type="pass" errorMessage="不正な値です" />
+      <AuthInput type="email" errorMessage="" />
+      <AuthInput type="pass" errorMessage="" />
       <AuthMainButton authMode={authMode} />
     </>
   );
@@ -39,8 +40,9 @@ const AuthPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
       <div className="max-w-md w-full space-y-8 mx-auto">
         <AuthHeader authMode={authMode} />
-        <div className="bg-white w-full h-auto p-15 rounded-2xl space-y-4 shadow-2xl">
+        <div className="bg-white w-full h-auto p-15 rounded-2xl space-y-5 shadow-2xl">
           {inputForm[authMode]}
+          <AuthSubActions authMode={authMode} setAuthMode={setAuthMode} />
         </div>
       </div>
     </div>
