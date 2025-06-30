@@ -4,7 +4,7 @@ import UIButton from "../ui/UIButton";
 
 type AuthSubActionsProps = {
   authMode: AuthMode;
-  setAuthMode: (mode: AuthMode) => void;
+  handleSetAuthMode: (mode: AuthMode) => void;
 };
 
 const AuthSubActions = (props: AuthSubActionsProps) => {
@@ -21,13 +21,13 @@ const AuthSubActions = (props: AuthSubActionsProps) => {
         </div>
         <div className="flex space-x-4">
           <div className="w-full">
-            <UIButton className="bg-slate-300 text-slate-700" onClick={() => props.setAuthMode("signUp")}>
+            <UIButton className="bg-slate-300 text-slate-700" onClick={() => props.handleSetAuthMode("signUp")}>
               <UserPlus size="20"/>
               <span>Sign Up</span>
               </UIButton>
           </div>
           <div className="w-full">
-            <UIButton className="bg-emerald-200 text-emerald-600" onClick={() => props.setAuthMode("guest")}>
+            <UIButton className="bg-emerald-200 text-emerald-600" onClick={() => props.handleSetAuthMode("guest")}>
               <User size="20" />
               <span>Guest</span>
               </UIButton>
@@ -38,7 +38,7 @@ const AuthSubActions = (props: AuthSubActionsProps) => {
   }
 
   return (
-    <button onClick={() => props.setAuthMode("signIn")}>Back to Sign In</button>
+    <button onClick={() => props.handleSetAuthMode("signIn")}>Back to Sign In</button>
   )
   
 };
