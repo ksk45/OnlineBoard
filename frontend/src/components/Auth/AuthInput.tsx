@@ -1,42 +1,16 @@
-import { Eye, LockKeyhole, Mail, User } from "lucide-react";
+import { Eye, EyeOff, LockKeyhole, Mail, User } from "lucide-react";
 import { useState, type JSX } from "react";
-import { tv, type VariantProps } from "tailwind-variants";
-
-// cssの条件分岐を記載
-const inputField = tv({
-  // slots：デフォルトのcssを記述
-  slots: {
-    label: "mb-2 block text-sm font-medium text-gray-900 dark:text-white",
-    input:
-      "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm",
-    error: "mt-2 text-sm text-red-600 dark:text-red-500",
-  },
-  // variants: 条件に応じたcssを記述
-  variants: {
-    error: {
-      true: {
-        label: "text-red-700 dark:text-red-500",
-        input:
-          "border-red-500 bg-red-50 text-red-900 placeholder-red-700 focus:border",
-      },
-    },
-  },
-});
+import UIInput from "../ui/UIInput";
 
 // props定義
-type AuthInputProps = VariantProps<typeof inputField> & {
+type AuthInputProps = {
   errorMessage?: string;
   type: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-// メイン処理
 const AuthInput = (props: AuthInputProps) => {
-  const { label, input, error } = inputField({
-    error: !!props.errorMessage,
-  });
-
   // inputのtype定義
   const types: Record<string, string> = {
     email: "email",
@@ -80,37 +54,29 @@ const AuthInput = (props: AuthInputProps) => {
 
   // pass確認ボタン定義
   const [isVisible, setIsVisible] = useState(false);
-  const togglePassVisibility = () => {
-    setIsVisible(!isVisible);
-  };
+  const passVisibleButton = (
+    <button
+      type="button"
+      onClick={() => setIsVisible(!isVisible)}
+      className="absolute right-2 text-gray-400"
+      tabIndex={-1}
+    >
+      {(props.type === "pass" || props.type === "pass_new") &&
+        (isVisible ? <EyeOff /> : <Eye />)}
+    </button>
+  );
 
   return (
     <div>
-      <label className={label()}>{inputLabel}</label>
-      <div className="relative flex items-center">
-        {placeholderIcon}
-        <input
-          type={isVisible ? "text" : type}
-          placeholder={placeholder}
-          className={`${input()} pl-10`}
-          required
-          value={props.value}
-          onChange={props.onChange}
-        />
-        {(props.type === "pass" || props.type === "pass_new") && (
-          <button
-            type="button"
-            onClick={togglePassVisibility}
-            className="absolute right-2 text-gray-400"
-            tabIndex={-1}
-          >
-            <Eye />
-          </button>
-        )}
-      </div>
-      {props.errorMessage && (
-        <div className={error()}>{props.errorMessage}</div>
-      )}
+      <UIInput
+        type={isVisible ? "text" : type}
+        placeholder={placeholder}
+        onChange={props.onChange}
+        inputLabel={inputLabel}
+        leftIcon={placeholderIcon}
+        rightIcon={passVisibleButton}
+        errorMessage={props.errorMessage}
+      />
     </div>
   );
 };

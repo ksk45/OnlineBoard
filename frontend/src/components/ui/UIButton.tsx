@@ -1,10 +1,12 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
+// props定義
 interface UIButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   className?: string;
 }
 
+// メイン処理
 const UIButton = ({ children, className = "", ...props }: UIButtonProps) => {
   return (
     <button

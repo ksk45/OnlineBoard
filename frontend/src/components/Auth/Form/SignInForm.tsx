@@ -28,7 +28,7 @@ const SignInForm = (props: SignInFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <AuthInput
         type="email"
         errorMessage=""
