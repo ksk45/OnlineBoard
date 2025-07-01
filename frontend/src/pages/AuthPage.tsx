@@ -1,10 +1,11 @@
-import { useState, type JSX, useEffect } from "react";
+import { useEffect, useState, type JSX } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import AuthHeader from "../components/Auth/AuthHeader";
-import AuthInput from "../components/Auth/AuthInput";
-import AuthMainButton from "../components/Auth/AuthMainButton";
-import type { AuthMode } from "../types/auth";
 import AuthSubActions from "../components/Auth/AuthSubActions";
-import { useNavigate, useLocation } from "react-router-dom";
+import GuestForm from "../components/Auth/Form/GuestForm";
+import SignInForm from "../components/Auth/Form/SignInForm";
+import SignUpForm from "../components/Auth/Form/SignUpForm";
+import type { AuthMode } from "../types/auth";
 
 const AuthPage = () => {
   const [authMode, setAuthMode] = useState<AuthMode>("signIn");
@@ -37,32 +38,11 @@ const AuthPage = () => {
     // 必要に応じて他のパスもここで制御可能
   }, [location.pathname]);
 
-  // それぞれのフォームを定義
-  // サインイン
-  const signInForm = () => (
-    <>
-      <AuthInput type="email" errorMessage="" />
-      <AuthInput type="pass" errorMessage="" />
-      <AuthMainButton authMode={authMode} />
-    </>
-  );
-  // サインアップ
-  const signUpForm = () => (
-    // TODO: サインアップ画面作成時に定義
-    <></>
-  );
-
-  // ゲストログイン
-  const guestForm = () => (
-    //TODO: ゲストログイン画面作成時に定義
-    <></>
-  );
-
   // authModeに応じてフォームを切り替え
   const inputForm: Record<AuthMode, JSX.Element> = {
-    signIn: signInForm(),
-    signUp: signUpForm(),
-    guest: guestForm(),
+    signIn: <SignInForm authMode={authMode} />,
+    signUp: <SignUpForm />,
+    guest: <GuestForm />,
   };
 
   return (
