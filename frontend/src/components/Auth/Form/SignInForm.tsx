@@ -1,11 +1,11 @@
-import type { AuthMode } from "../../../types/auth"
-import AuthInput from "../AuthInput"
-import AuthMainButton from "../AuthMainButton"
+import type { AuthMode } from "../../../types/auth";
+import AuthInput from "../AuthInput";
+import AuthMainButton from "../AuthMainButton";
 
-
+// props定義
 type SignInFormProps = {
   authMode: AuthMode;
-}
+};
 
 // サインイン画面のフォームセット
 const SignInForm = (props: SignInFormProps) => {
@@ -15,7 +15,7 @@ const SignInForm = (props: SignInFormProps) => {
       <AuthInput type="pass" errorMessage="" />
       <AuthMainButton authMode={props.authMode} />
     </>
-  )
-}
+  );
+};
 
-export default SignInForm
+export default SignInForm;

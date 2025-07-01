@@ -6,7 +6,6 @@ type AuthHeaderProps = {
 };
 
 const AuthHeader = ({ authMode }: AuthHeaderProps) => {
-  
   const getTitle = () => {
     switch (authMode) {
       case "signIn":
@@ -14,11 +13,10 @@ const AuthHeader = ({ authMode }: AuthHeaderProps) => {
       case "signUp":
         return "Create Account";
       case "guest":
-        return "Join as Guest"
+        return "Join as Guest";
     }
   };
 
-  
   return (
     <>
       <div className="text-center">

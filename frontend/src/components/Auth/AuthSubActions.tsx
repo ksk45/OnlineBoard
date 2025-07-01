@@ -21,26 +21,33 @@ const AuthSubActions = (props: AuthSubActionsProps) => {
         </div>
         <div className="flex space-x-4">
           <div className="w-full">
-            <UIButton className="bg-slate-300 text-slate-700" onClick={() => props.handleSetAuthMode("signUp")}>
-              <UserPlus size="20"/>
+            <UIButton
+              className="bg-slate-300 text-slate-700"
+              onClick={() => props.handleSetAuthMode("signUp")}
+            >
+              <UserPlus size="20" />
               <span>Sign Up</span>
-              </UIButton>
+            </UIButton>
           </div>
           <div className="w-full">
-            <UIButton className="bg-emerald-200 text-emerald-600" onClick={() => props.handleSetAuthMode("guest")}>
+            <UIButton
+              className="bg-emerald-200 text-emerald-600"
+              onClick={() => props.handleSetAuthMode("guest")}
+            >
               <User size="20" />
               <span>Guest</span>
-              </UIButton>
+            </UIButton>
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
-    <button onClick={() => props.handleSetAuthMode("signIn")}>Back to Sign In</button>
-  )
-  
+    <button onClick={() => props.handleSetAuthMode("signIn")}>
+      Back to Sign In
+    </button>
+  );
 };
 
 export default AuthSubActions;
