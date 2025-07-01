@@ -2,6 +2,7 @@ import UIButton from "../ui/UIButton";
 import { LogIn, User, UserPlus } from "lucide-react";
 import type { AuthMode } from "../../types/auth";
 
+// props定義
 type AuthMainButtonProps = {
   authMode: AuthMode;
 };
@@ -44,7 +45,7 @@ const AuthMainButton = ({ authMode }: AuthMainButtonProps) => {
   return (
     <UIButton
       className={`text-white bg-gradient-to-r ${getButtonGradient[authMode]}`}
-      type="button"
+      type="submit"
     >
       {getButtonLabel(authMode)}
     </UIButton>

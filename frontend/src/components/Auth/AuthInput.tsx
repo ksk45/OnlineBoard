@@ -27,6 +27,8 @@ const inputField = tv({
 type AuthInputProps = VariantProps<typeof inputField> & {
   errorMessage?: string;
   type: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 // メイン処理
@@ -39,6 +41,8 @@ const AuthInput = (props: AuthInputProps) => {
   const types: Record<string, string> = {
     email: "email",
     pass: "password",
+    pass_new: "password",
+    pass_conf: "password",
   };
   const type = types[props.type] || "text";
 
@@ -90,6 +94,8 @@ const AuthInput = (props: AuthInputProps) => {
           placeholder={placeholder}
           className={`${input()} pl-10`}
           required
+          value={props.value}
+          onChange={props.onChange}
         />
         {(props.type === "pass" || props.type === "pass_new") && (
           <button
