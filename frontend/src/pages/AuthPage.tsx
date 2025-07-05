@@ -41,7 +41,7 @@ const AuthPage = () => {
   // authModeに応じてフォームを切り替え
   const inputForm: Record<AuthMode, JSX.Element> = {
     signIn: <SignInForm authMode={authMode} />,
-    signUp: <SignUpForm />,
+    signUp: <SignUpForm authMode={authMode} />,
     guest: <GuestForm />,
   };
 

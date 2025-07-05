@@ -17,3 +17,6 @@ export const validateEmailFormat = (value: string, message = "有効なメール
 // validation パスワード複雑性チェック
 export const validatePasswordComplexity = (value: string, message = "英字と数字を両方含めてください") =>
   /[a-zA-Z]/.test(value) && /[0-9]/.test(value) ? "" : message;
+
+export const validatePasswordMatch = (value: string, valueConf: string) => 
+  value !== valueConf ? `パスワードが一致しません` : "";

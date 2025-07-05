@@ -44,9 +44,11 @@ const AuthSubActions = (props: AuthSubActionsProps) => {
   }
 
   return (
-    <button onClick={() => props.handleSetAuthMode("signIn")}>
-      Back to Sign In
-    </button>
+    <div className="flex justify-center">
+      <button className="text-slate-600" onClick={() => props.handleSetAuthMode("signIn")}>
+        ←&emsp;Back to Sign In
+      </button>
+    </div>
   );
 };
 
