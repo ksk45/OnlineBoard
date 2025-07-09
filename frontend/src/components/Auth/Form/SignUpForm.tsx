@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import type { AuthMode } from "../../../types/auth";
 import AuthInput from "../AuthInput";
 import AuthMainButton from "../AuthMainButton";
@@ -70,10 +70,29 @@ const SignUpForm = (props: SignUpFormProps) => {
         validatePasswordMatch(passNew, passConf),
       ].find(Boolean) || "";
     setPassConfError(passConfErr);
+
+    return nameErr || emailErr || passNewErr || passConfErr;
+  };
+
+  // POSTapi呼び出し
+  const handleSubmit = (e: React.FormEvent) => {
+    // submitのデフォルト挙動（ページ遷移）をキャンセル
+    e.preventDefault();
+    // バリデーションチェック
+    if (!isValid) return;
+  // const handleSubmit = async () => {
+    // const res = await fetch("/api/login", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({ email, password }),
+    // });
+    /** バックエンド実装までのダミー st */
+    alert(`name: ${name} \nemail: ${email} \npassNew: ${passNew}\npassConf: ${passConf} \nサインアップ処理成功（ダミー）`);
+    /** バックエンド実装までのダミー ed */
   };
 
   return (
-    <>
+    <form onSubmit={handleSubmit} className="space-y-4">
       <AuthInput
         type="name"
         errorMessage=""
@@ -99,7 +118,7 @@ const SignUpForm = (props: SignUpFormProps) => {
         onChange={(e) => setPassConf(e.target.value)}
       />
       <AuthMainButton authMode={props.authMode} />
-    </>
+    </form>
   );
 };
 
