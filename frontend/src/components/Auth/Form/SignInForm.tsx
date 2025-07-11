@@ -20,8 +20,8 @@ const SignInForm = (props: SignInFormProps) => {
   // useState定義
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [emailErr, setEmailErr] = useState("");
+  const [passwordErr, setPasswordErr] = useState("");
 
   // バリデーション関数
   const isValid = () => {
@@ -32,7 +32,7 @@ const SignInForm = (props: SignInFormProps) => {
         validateMaxLength(email, 100),
         validateEmailFormat(email),
       ].find(Boolean) || "";
-    setEmailError(emailErr);
+    setEmailErr(emailErr);
 
     // パスワードバリデーション
     const passwordErr =
@@ -42,7 +42,7 @@ const SignInForm = (props: SignInFormProps) => {
         validateMaxLength(password, 64),
         validatePasswordComplexity(password),
       ].find(Boolean) || "";
-    setPasswordError(passwordErr);
+    setPasswordErr(passwordErr);
 
     // バリデーションエラーがあればfalseを返す
     return !emailErr && !passwordErr;
@@ -69,13 +69,13 @@ const SignInForm = (props: SignInFormProps) => {
     <form onSubmit={handleSubmit} className="space-y-4">
       <AuthInput
         type="email"
-        errorMessage={emailError}
+        errorMessage={emailErr}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <AuthInput
         type="pass"
-        errorMessage={passwordError}
+        errorMessage={passwordErr}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
