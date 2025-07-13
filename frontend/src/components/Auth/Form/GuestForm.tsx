@@ -22,8 +22,17 @@ const GuestForm = () => {
     return !nameErr;
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    // submitのデフォルト挙動（ページ遷移）をキャンセル
+    e.preventDefault();
+    // バリデーションチェック
+    if (!isValid()) return;
+
+    alert(`name: ${name}\nログイン処理成功（ダミー）`)
+  };
+
   return (
-    <form className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <AuthInput
         errorMessage={nameErr}
         type="name"
