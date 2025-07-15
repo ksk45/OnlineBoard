@@ -20,3 +20,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+
+# ログ出力設定
+logging:
+  file.name: logs/app.log
+  level:
+    '[org.springframework.web]': INFO
+    '[org.slf4j.event]': INFO
