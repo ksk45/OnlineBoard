@@ -19,18 +19,22 @@ public class CommonInterceptor implements HandlerInterceptor {
   /** Controller前処理 */
   @Override
   public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws Exception {
-    log.info("Process Start___URL : " + request.getRequestURL());
+    log.info("Process Start " +  commonLog(request));
     return true;
   }
   
   /** Controller後処理 */
   @Override
   public void postHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler, @Nullable ModelAndView modelAndView) throws Exception {
-    log.info("Process End___URL : " + request.getRequestURL());
+    log.info("Process End " +  commonLog(request));
   }
 
   /** ビューがレンダリングされた後 */
   @Override
   public void afterCompletion(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler, @Nullable Exception ex) throws Exception {
+  }
+
+  private String commonLog(HttpServletRequest request) {
+    return "URI:" + request.getRequestURI() + " METHOD: " + request.getMethod();
   }
 }

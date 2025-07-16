@@ -10,6 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    // Spring Securityにより、自動でlogin画面へリダイレクトするのを無効化
     http
       .authorizeHttpRequests(auth -> auth
         .anyRequest().permitAll() // 全リクエストを許可
