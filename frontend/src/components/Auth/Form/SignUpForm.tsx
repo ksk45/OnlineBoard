@@ -73,17 +73,25 @@ const SignUpForm = (props: SignUpFormProps) => {
   };
 
   // POSTapi呼び出し
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     // submitのデフォルト挙動（ページ遷移）をキャンセル
     e.preventDefault();
     // バリデーションチェック
     if (!isValid()) return;
-  // const handleSubmit = async () => {
-    // const res = await fetch("/api/login", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ email, password }),
-    // });
+    const res = await fetch("/api/auth/sign-up", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, passNew, passConf }),
+    });
+    
+    if (res.ok) {
+      const data = await res.json();
+      alert(`サインアップ成功: ${data.message}`)
+    } else {
+      const errorData = await res.json();
+      alert(`サインアップ失敗: ${errorData.errorMessage});
+      }`)
+    }
     /** バックエンド実装までのダミー st */
     alert(`name: ${name} \nemail: ${email} \npassNew: ${passNew}\npassConf: ${passConf} \nサインアップ処理成功（ダミー）`);
     /** バックエンド実装までのダミー ed */
