@@ -77,7 +77,7 @@ const SignUpForm = (props: SignUpFormProps) => {
     // submitのデフォルト挙動（ページ遷移）をキャンセル
     e.preventDefault();
     // バリデーションチェック
-    if (!isValid()) return;
+    // if (!isValid()) return;
     const res = await fetch("/api/auth/sign-up", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -89,11 +89,10 @@ const SignUpForm = (props: SignUpFormProps) => {
       alert(`サインアップ成功: ${data.message}`)
     } else {
       const errorData = await res.json();
-      alert(`サインアップ失敗: ${errorData.errorMessage});
-      }`)
+      alert(`サインアップ失敗: ${errorData.errorMessage}`);
     }
     /** バックエンド実装までのダミー st */
-    alert(`name: ${name} \nemail: ${email} \npassNew: ${passNew}\npassConf: ${passConf} \nサインアップ処理成功（ダミー）`);
+    // alert(`name: ${name} \nemail: ${email} \npassNew: ${passNew}\npassConf: ${passConf} \nサインアップ処理成功（ダミー）`);
     /** バックエンド実装までのダミー ed */
   };
 
