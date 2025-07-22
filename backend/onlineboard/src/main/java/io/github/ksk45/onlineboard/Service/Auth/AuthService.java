@@ -4,9 +4,9 @@ public interface AuthService {
 
   /**
    * メールアドレスがすでに登録されているかのチェック
+   * 既に登録されている場合、例外（EmailAlreadyRegisteredException）をスロー
    *
    * @param email チェック対象のメールアドレス
-   * @return true: 登録済み, false: 未登録
    */
-  public boolean isEmailExsists(String email);
+  public void isEmailExsists(String email);
 }
