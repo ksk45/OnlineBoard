@@ -1,4 +1,4 @@
-package io.github.ksk45.onlineboard.Form.Auth;
+package io.github.ksk45.onlineboard.model.Form.Auth;
 
 import io.github.ksk45.onlineboard.Validation.PasswordMatches;
 import jakarta.validation.constraints.Email;

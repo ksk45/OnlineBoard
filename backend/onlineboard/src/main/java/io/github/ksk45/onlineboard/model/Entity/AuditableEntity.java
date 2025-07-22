@@ -1,4 +1,4 @@
-package io.github.ksk45.onlineboard.model;
+package io.github.ksk45.onlineboard.model.Entity;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseEntity {
+public abstract class AuditableEntity {
 
   @CreatedBy
   @Column(name = "created_by", updatable = false)

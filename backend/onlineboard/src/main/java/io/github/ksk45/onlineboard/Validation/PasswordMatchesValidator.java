@@ -1,7 +1,7 @@
 package io.github.ksk45.onlineboard.Validation;
 
-import io.github.ksk45.onlineboard.Form.Auth.SignUpForm;
 import io.github.ksk45.onlineboard.Validation.PasswordMatches;
+import io.github.ksk45.onlineboard.model.Form.Auth.SignUpForm;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

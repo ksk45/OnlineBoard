@@ -1,4 +1,4 @@
-package io.github.ksk45.onlineboard.model;
+package io.github.ksk45.onlineboard.model.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
