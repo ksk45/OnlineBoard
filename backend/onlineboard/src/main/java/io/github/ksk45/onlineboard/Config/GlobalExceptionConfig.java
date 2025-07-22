@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import io.github.ksk45.onlineboard.Exception.Auth.EmailAlreadyRegisteredException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,5 +47,23 @@ public class GlobalExceptionConfig {
     }
 
     return new ResponseEntity<>(problemDetail, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(EmailAlreadyRegisteredException.class)
+  public ResponseEntity<ProblemDetail> handleEmailAlreadyRegisterException(EmailAlreadyRegisteredException ex, WebRequest request) {
+    Map<String, String> fieldErrors = new HashMap<>();
+
+    // propertiesファイルからエラーメッセージを取得
+    String errorMessage = messageSource.getMessage(ex.getMessage(), null, request.getLocale());
+
+    log.info("ValidationError field: email" + " message:" + errorMessage);
+    fieldErrors.put("email", errorMessage);
+
+    ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
+    if (!ObjectUtils.isEmpty(fieldErrors)) {
+      problemDetail.setProperty("fieldErrors", fieldErrors);
+    }
+
+    return new ResponseEntity<>(problemDetail, HttpStatus.CONFLICT);
   }
 }
