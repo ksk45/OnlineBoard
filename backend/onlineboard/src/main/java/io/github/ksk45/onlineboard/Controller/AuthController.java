@@ -23,7 +23,11 @@ public class AuthController {
   public String signUp(@Valid @RequestBody SignUpForm signUpForm) {
     log.info("サインアップapi呼び出し成功");
     
+    // 
     authService.isEmailExsists(signUpForm.getEmail());
+
+    // ユーザー登録
+    authService.regUser(signUpForm);
 
     return null;
   }
