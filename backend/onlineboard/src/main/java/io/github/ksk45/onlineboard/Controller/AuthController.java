@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import io.github.ksk45.onlineboard.Service.Auth.AuthService;
 import io.github.ksk45.onlineboard.model.Form.Auth.SignUpForm;
@@ -20,15 +22,15 @@ public class AuthController {
   private final AuthService authService;
 
   @PostMapping("/sign-up")
-  public String signUp(@Valid @RequestBody SignUpForm signUpForm) {
+  public ResponseEntity<Void> signUp(@Valid @RequestBody SignUpForm signUpForm) {
     log.info("サインアップapi呼び出し成功");
     
-    // 
+    // メールアドレス存在チェック
     authService.isEmailExsists(signUpForm.getEmail());
 
     // ユーザー登録
     authService.regUser(signUpForm);
 
-    return null;
+    return new ResponseEntity<>(HttpStatus.CREATED);
   }
 }
