@@ -1,6 +1,6 @@
 package io.github.ksk45.onlineboard.Service.Auth;
 
-import io.github.ksk45.onlineboard.model.Form.Auth.SignUpForm;
+import io.github.ksk45.onlineboard.Model.Form.Auth.SignUpForm;
 
 public interface AuthService {
 

@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import io.github.ksk45.onlineboard.Model.Form.Auth.SignUpForm;
 import io.github.ksk45.onlineboard.Service.Auth.AuthService;
-import io.github.ksk45.onlineboard.model.Form.Auth.SignUpForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

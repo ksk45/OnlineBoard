@@ -5,9 +5,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import io.github.ksk45.onlineboard.Exception.Auth.EmailAlreadyRegisteredException;
+import io.github.ksk45.onlineboard.Model.Entity.User;
+import io.github.ksk45.onlineboard.Model.Form.Auth.SignUpForm;
 import io.github.ksk45.onlineboard.Repository.UserRepository;
-import io.github.ksk45.onlineboard.model.Entity.User;
-import io.github.ksk45.onlineboard.model.Form.Auth.SignUpForm;
 import lombok.RequiredArgsConstructor;
 
 @Service
