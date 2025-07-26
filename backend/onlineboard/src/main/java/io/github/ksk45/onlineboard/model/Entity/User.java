@@ -22,10 +22,10 @@ import lombok.Setter;
 public class User extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer userId;
 
     @Column(nullable = false, unique = true)
-    private String username;
+    private String userName;
 
     @Column(nullable = false)
     private String password;

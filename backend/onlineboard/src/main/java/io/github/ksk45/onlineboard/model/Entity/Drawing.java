@@ -1,34 +1,34 @@
-package io.github.ksk45.onlineboard.Model.Entity;
+// package io.github.ksk45.onlineboard.Model.Entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+// import jakarta.persistence.*;
+// import lombok.Data;
+// import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@Entity
-@Table(name = "drawings")
-public class Drawing {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+// @Data
+// @NoArgsConstructor
+// @Entity
+// @Table(name = "drawings")
+// public class Drawing {
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id", nullable = false)
-    private Board board;
+//     @ManyToOne(fetch = FetchType.LAZY)
+//     @JoinColumn(name = "board_id", nullable = false)
+//     private Board board;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+//     @ManyToOne(fetch = FetchType.LAZY)
+//     @JoinColumn(name = "user_id", nullable = false)
+//     private User user;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String drawingData;
+//     @Column(nullable = false, columnDefinition = "TEXT")
+//     private String drawingData;
 
-    @Column(name = "created_at")
-    private java.time.LocalDateTime createdAt;
+//     @Column(name = "created_at")
+//     private java.time.LocalDateTime createdAt;
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = java.time.LocalDateTime.now();
-    }
-} 
+//     @PrePersist
+//     protected void onCreate() {
+//         createdAt = java.time.LocalDateTime.now();
+//     }
+// } 
