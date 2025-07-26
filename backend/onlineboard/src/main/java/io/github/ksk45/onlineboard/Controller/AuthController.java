@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import io.github.ksk45.onlineboard.Model.Entity.User;
 import io.github.ksk45.onlineboard.Model.Form.Auth.SignUpForm;
+import io.github.ksk45.onlineboard.Model.Response.AuthResponseDto;
 import io.github.ksk45.onlineboard.Service.Auth.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,15 +24,21 @@ public class AuthController {
   private final AuthService authService;
 
   @PostMapping("/sign-up")
-  public ResponseEntity<Void> signUp(@Valid @RequestBody SignUpForm signUpForm) {
+  public ResponseEntity<AuthResponseDto> signUp(@Valid @RequestBody SignUpForm signUpForm) {
     log.info("サインアップapi呼び出し成功");
     
     // メールアドレス存在チェック
     authService.isEmailExsists(signUpForm.getEmail());
 
     // ユーザー登録
-    authService.regUser(signUpForm);
+    User user = authService.regUser(signUpForm);
 
-    return new ResponseEntity<>(HttpStatus.CREATED);
+    AuthResponseDto responseDto = AuthResponseDto.builder()
+                                  .userId(user.getUserId())
+                                  .userName(user.getUserName())
+                                  .email(user.getEmail())
+                                  .build();
+
+    return new ResponseEntity<AuthResponseDto>(responseDto, HttpStatus.CREATED);
   }
 }

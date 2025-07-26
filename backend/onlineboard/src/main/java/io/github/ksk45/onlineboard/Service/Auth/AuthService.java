@@ -1,5 +1,6 @@
 package io.github.ksk45.onlineboard.Service.Auth;
 
+import io.github.ksk45.onlineboard.Model.Entity.User;
 import io.github.ksk45.onlineboard.Model.Form.Auth.SignUpForm;
 
 public interface AuthService {
@@ -16,6 +17,7 @@ public interface AuthService {
    * ユーザー情報のDB登録
    *
    * @param signUpForm 登録フォーム
+   * @return UserEntity 登録したユーザーEntityを返却
    */
-  public void regUser(SignUpForm signUpForm);
+  public User regUser(SignUpForm signUpForm);
 }

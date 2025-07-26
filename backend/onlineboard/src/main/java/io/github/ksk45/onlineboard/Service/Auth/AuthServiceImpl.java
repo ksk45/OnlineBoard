@@ -26,14 +26,14 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
-  public void regUser(SignUpForm signUpForm) {
+  public User regUser(SignUpForm signUpForm) {
 
     User userEntity = User.builder()
         .email(signUpForm.getEmail())
-        .username(signUpForm.getName())
+        .userName(signUpForm.getName())
         .password(signUpForm.getPassNew())
         .build();
 
-    userRepository.save(userEntity);
+    return userRepository.save(userEntity);
   }
 }
