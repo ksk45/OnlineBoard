@@ -10,6 +10,10 @@ export const validateMaxLength = (value: string, max: number, message?: string) 
 export const validateMinLength = (value: string, min: number, message?: string) =>
   value.length < min ? (message || `${min}文字以上で入力してください`) : "";
 
+// validation 文字数範囲チェック
+export const validateLength = (value: string, min: number, max: number, message?: string) =>
+  value.length < min || value.length > max ? (message || `${min}文字以上、${max}文字以内で入力してください`) : "";
+
 // validation メールアドレス形式チェック
 export const validateEmailFormat = (value: string, message = "有効なメールアドレス形式で入力してください") =>
   value.includes("@") && value.includes(".") ? "" : message;

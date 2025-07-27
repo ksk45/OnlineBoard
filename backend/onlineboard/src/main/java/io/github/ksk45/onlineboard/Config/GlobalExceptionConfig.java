@@ -33,7 +33,8 @@ public class GlobalExceptionConfig {
     final Map<String, Integer> ERROR_PRIORITIES = Map.of(
         "NotBlank", 1,
         "Size", 2,
-        "Pattern", 3);
+        "Length", 3,
+        "Pattern", 4);
 
     Map<String, String> fieldErrors = new HashMap<>();
     Map<String, Integer> fieldPriority = new HashMap<>();

@@ -1,5 +1,7 @@
 package io.github.ksk45.onlineboard.Model.Form.Auth;
 
+import org.hibernate.validator.constraints.Length;
+
 import io.github.ksk45.onlineboard.Validation.PasswordMatches;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -21,14 +23,12 @@ public class SignUpForm {
   private String email;
 
   @NotBlank(message = "{VALIDATION_REQUIRED}")
-  @Size(min = 8, message = "{VALIDATION_MIN_LENGTH}")
-  @Size(max = 64, message = "{VALIDATION_MAX_LENGTH}")
+  @Length(min = 8, max = 64, message = "{VALIDATION_LENGTH}")
   @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z\\d]*$", message = "{VALIDATION_PASSWORD_COMPLEXITY}")
   private String passNew;
   
   @NotBlank(message = "{VALIDATION_REQUIRED}")
-  @Size(min = 8, message = "{VALIDATION_MIN_LENGTH}")
-  @Size(max = 64, message = "{VALIDATION_MAX_LENGTH}")
+  @Length(min = 8, max = 64, message = "{VALIDATION_LENGTH}")
   @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z\\d]*$", message = "{VALIDATION_PASSWORD_COMPLEXITY}")
   private String passConf;
 }

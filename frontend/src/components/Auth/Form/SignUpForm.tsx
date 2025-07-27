@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import type { AuthMode } from "../../../types/auth";
-import AuthInput from "../AuthInput";
-import AuthMainButton from "../AuthMainButton";
 import {
   validateEmailFormat,
+  validateLength,
   validateMaxLength,
-  validateMinLength,
   validatePasswordComplexity,
   validatePasswordMatch,
-  validateRequired,
+  validateRequired
 } from "../../../utils/validation";
+import AuthInput from "../AuthInput";
+import AuthMainButton from "../AuthMainButton";
 
 // props定義
 type SignUpFormProps = {
@@ -51,19 +51,21 @@ const SignUpForm = (props: SignUpFormProps) => {
     const passNewErr =
       [
         validateRequired(passNew, "パスワードは必須です"),
-        validateMinLength(passNew, 8),
-        validateMaxLength(passNew, 64),
+        // validateMinLength(passNew, 8),
+        // validateMaxLength(passNew, 64),
+        validateLength(passNew, 8, 64),
         validatePasswordComplexity(passNew),
         validatePasswordMatch(passNew, passConf),
       ].find(Boolean) || "";
-    setPassNewErr(passNewErr);
-
-    // Confirmパスワードバリデーション
-    const passConfErr =
+      setPassNewErr(passNewErr);
+      
+      // Confirmパスワードバリデーション
+      const passConfErr =
       [
         validateRequired(passConf, "パスワードは必須です"),
-        validateMinLength(passConf, 8),
-        validateMaxLength(passConf, 64),
+        // validateMinLength(passConf, 8),
+        // validateMaxLength(passConf, 64),
+        validateLength(passNew, 8, 64),
         validatePasswordComplexity(passConf),
         validatePasswordMatch(passNew, passConf),
       ].find(Boolean) || "";
@@ -72,12 +74,20 @@ const SignUpForm = (props: SignUpFormProps) => {
     return !nameErr && !emailErr && !passNewErr && !passConfErr;
   };
 
+  // POSTエラー時、エラーセット
+  const fieldErrorSet = (errors: Record<string, string>) => {
+    setNameErr(errors.name || "");
+    setEmailErr(errors.email || "");
+    setPassNewErr(errors.passNew || "");
+    setPassConfErr(errors.passConf || "");
+  }
+
   // POSTapi呼び出し
   const handleSubmit = async (e: React.FormEvent) => {
     // submitのデフォルト挙動（ページ遷移）をキャンセル
     e.preventDefault();
     // バリデーションチェック
-    // if (!isValid()) return;
+    if (!isValid()) return;
     const res = await fetch("/api/auth/sign-up", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -86,14 +96,19 @@ const SignUpForm = (props: SignUpFormProps) => {
     
     if (res.ok) {
       const data = await res.json();
-      alert(`サインアップ成功: ${data.message}`)
+      alert(`サインアップ成功: ユーザーID: ${data.userId}, ユーザー名: ${data.userName}, メールアドレス: ${data.mail}`);
     } else {
       const errorData = await res.json();
-      alert(`サインアップ失敗: ${errorData.errorMessage}`);
+      if (res.status === 400 || res.status === 409) {
+        if (errorData.fieldErrors) {
+          fieldErrorSet(errorData.fieldErrors);
+        } else {
+          alert(`予期せぬエラーが発生しました`);
+        }
+      } else {
+        alert(`予期せぬエラーが発生しました`);
+      }
     }
-    /** バックエンド実装までのダミー st */
-    // alert(`name: ${name} \nemail: ${email} \npassNew: ${passNew}\npassConf: ${passConf} \nサインアップ処理成功（ダミー）`);
-    /** バックエンド実装までのダミー ed */
   };
 
   return (
