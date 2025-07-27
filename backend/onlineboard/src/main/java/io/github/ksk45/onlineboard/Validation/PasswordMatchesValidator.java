@@ -5,28 +5,32 @@ import io.github.ksk45.onlineboard.Model.Form.Auth.SignUpForm;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
+public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, SignUpForm> {
 
   @Override
   public void initialize(PasswordMatches a) {
   }
 
   @Override
-  public boolean isValid(Object obj, ConstraintValidatorContext context) {
+  public boolean isValid(SignUpForm signUpForm, ConstraintValidatorContext context) {
     // バリデーション対象（obj）をキャスト
-    if (!(obj instanceof SignUpForm)) {
-      return true;
-    }
-    SignUpForm signUpForm = (SignUpForm) obj;
+    // if (!(obj instanceof SignUpForm)) {
+      // return true;
+    // }
+    // SignUpForm signUpForm = (SignUpForm) obj;
 
     // バリデーションロジック
     boolean isValid = signUpForm.getPassNew().equals(signUpForm.getPassConf());
 
     if (!isValid) {
-      // context.disableDefaultConstraintViolation();
-      context.buildConstraintViolationWithTemplate((context.getDefaultConstraintMessageTemplate()))
-          .addPropertyNode("passConf") // エラーを passConf フィールドに紐付け
-          .addConstraintViolation(); // エラーを登録
+      // エラーを passNew と passConf フィールドに紐付け
+      String[] propertyList = {"passNew", "passConf"};
+
+      for (String property : propertyList) {
+        context.buildConstraintViolationWithTemplate((context.getDefaultConstraintMessageTemplate()))
+            .addPropertyNode(property)
+            .addConstraintViolation(); // エラーを登録
+      }
     }
 
     return isValid;
