@@ -32,6 +32,8 @@ const SignUpForm = (props: SignUpFormProps) => {
 
   // ユーザーコンテキスト取得
   const userContext = useUser();
+
+  const navigate = useNavigate();
   
 
   // バリデーション定義
@@ -107,6 +109,7 @@ const SignUpForm = (props: SignUpFormProps) => {
         userName: data.userName,
         email: data.mail,
       });
+      navigate("/menu");
     } else {
       const errorData = await res.json();
       if (res.status === 400 || res.status === 409) {

@@ -24,8 +24,7 @@ const AuthPage = () => {
         navigate("/sign-up");
         break;
       case "guest":
-        // ゲストログインのパスを指定
-        // navigate();
+        navigate("/guest");
         break;
     }
   };
