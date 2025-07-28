@@ -1,0 +1,22 @@
+# application-dev.yml
+spring:
+  application:
+    name: onlineboard
+  # MySQL接続設定
+  datasource:
+    url: jdbc:mysql://localhost:4306/app_db
+    username: app_user
+    password: app_pass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # Hibernate設定（JPA用）
+  jpa:
+    hibernate:
+      # テーブルの自動作成・更新
+      ddl-auto: update
+    # SQLのコンソール表示
+    show-sql: true
+    # 自動生成SQLのMySQLへの最適化設定
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
