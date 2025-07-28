@@ -2,12 +2,18 @@ import React, { useState } from "react";
 import AuthInput from "../AuthInput";
 import { validateMaxLength, validateRequired } from "../../../utils/validation";
 import AuthMainButton from "../AuthMainButton";
+import { useUser } from "../../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 // ゲストログイン
 const GuestForm = () => {
   // useState定義
   const [name, setName] = useState("");
   const [nameErr, setNameErr] = useState("");
+
+  // ユーザーコンテキスト取得
+  const userContext = useUser();
+  const navigate = useNavigate();
 
   // エラー定義
   const isValid = () => {
@@ -28,7 +34,14 @@ const GuestForm = () => {
     // バリデーションチェック
     if (!isValid()) return;
 
-    alert(`name: ${name}\nログイン処理成功（ダミー）`)
+    userContext.setUser({
+      userId: -1,
+      userName: name,
+      email: "guest",
+    });
+    navigate("/menu");
+    // alert(`name: ${name}\nログイン処理成功（ダミー）`)
+
   };
 
   return (
