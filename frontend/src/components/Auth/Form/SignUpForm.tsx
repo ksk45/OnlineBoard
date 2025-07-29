@@ -10,6 +10,8 @@ import {
 } from "../../../utils/validation";
 import AuthInput from "../AuthInput";
 import AuthMainButton from "../AuthMainButton";
+import { useUser } from "../../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 // props定義
 type SignUpFormProps = {
@@ -27,6 +29,12 @@ const SignUpForm = (props: SignUpFormProps) => {
   const [emailErr, setEmailErr] = useState("");
   const [passNewErr, setPassNewErr] = useState("");
   const [passConfErr, setPassConfErr] = useState("");
+
+  // ユーザーコンテキスト取得
+  const userContext = useUser();
+
+  const navigate = useNavigate();
+  
 
   // バリデーション定義
   const isValid = () => {
@@ -96,7 +104,12 @@ const SignUpForm = (props: SignUpFormProps) => {
     
     if (res.ok) {
       const data = await res.json();
-      alert(`サインアップ成功: ユーザーID: ${data.userId}, ユーザー名: ${data.userName}, メールアドレス: ${data.mail}`);
+      userContext.setUser({
+        userId: data.userId,
+        userName: data.userName,
+        email: data.mail,
+      });
+      navigate("/menu");
     } else {
       const errorData = await res.json();
       if (res.status === 400 || res.status === 409) {

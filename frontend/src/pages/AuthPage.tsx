@@ -24,8 +24,7 @@ const AuthPage = () => {
         navigate("/sign-up");
         break;
       case "guest":
-        // ゲストログインのパスを指定
-        // navigate();
+        navigate("/guest");
         break;
     }
   };
@@ -35,7 +34,9 @@ const AuthPage = () => {
     if (location.pathname === "/sign-up") {
       setAuthMode("signUp");
     }
-    // 必要に応じて他のパスもここで制御可能
+    if (location.pathname === "/guest") {
+      setAuthMode("guest");
+    }
   }, [location.pathname]);
 
   // authModeに応じてフォームを切り替え
