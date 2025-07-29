@@ -9,6 +9,8 @@ import {
 } from "../../../utils/validation";
 import AuthInput from "../AuthInput";
 import AuthMainButton from "../AuthMainButton";
+import { useUser } from "../../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 // props定義
 type SignInFormProps = {
@@ -22,6 +24,11 @@ const SignInForm = (props: SignInFormProps) => {
   const [password, setPassword] = useState("");
   const [emailErr, setEmailErr] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
+
+  // ユーザーコンテキスト取得
+  const userContext = useUser();
+
+  const navigate = useNavigate();
 
   // バリデーション関数
   const isValid = () => {
@@ -48,21 +55,45 @@ const SignInForm = (props: SignInFormProps) => {
     return !emailErr && !passwordErr;
   };
 
+  // POSTエラー時、エラーセット
+  const fieldErrorSet = (errorData: Record<string, string>) => {
+    setEmailErr(errorData.email || "");
+    setPasswordErr(errorData.password || "");
+  }
+
+
   // POSTapi呼び出し
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     // submitのデフォルト挙動（ページ遷移）をキャンセル
     e.preventDefault();
     // バリデーションチェック
     if (!isValid()) return;
-  // const handleSubmit = async () => {
-    // const res = await fetch("/api/login", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ email, password }),
-    // });
-    /** バックエンド実装までのダミー st */
-    alert(`email: ${email} \npassword: ${password} \nログイン処理成功（ダミー）`);
-    /** バックエンド実装までのダミー ed */
+    const res = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      userContext.setUser({
+        userId: data.userId,
+        userName: data.userName,
+        email: data.email,
+      });
+      navigate("/menu");
+    } else {
+      const errorData = await res.json();
+      if (res.status === 400 || res.status === 401) {
+        if (errorData.fieldErrors) {
+          fieldErrorSet(errorData.fieldErrors);
+        } else {
+          alert(`予期せぬエラーが発生しました`);
+        }
+      } else {
+        alert(`予期せぬエラーが発生しました`);
+      }
+    }
   };
 
   return (
