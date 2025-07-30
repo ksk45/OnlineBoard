@@ -68,7 +68,7 @@ const SignInForm = (props: SignInFormProps) => {
     e.preventDefault();
     // バリデーションチェック
     if (!isValid()) return;
-    const res = await fetch("/api/login", {
+    const res = await fetch("/api/auth/sign-in", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
