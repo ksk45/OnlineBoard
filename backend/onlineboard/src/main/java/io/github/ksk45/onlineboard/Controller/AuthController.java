@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import io.github.ksk45.onlineboard.Model.Entity.User;
+import io.github.ksk45.onlineboard.Model.Form.Auth.SignInForm;
 import io.github.ksk45.onlineboard.Model.Form.Auth.SignUpForm;
 import io.github.ksk45.onlineboard.Model.Response.AuthResponseDto;
 import io.github.ksk45.onlineboard.Service.Auth.AuthService;
@@ -33,11 +34,21 @@ public class AuthController {
     // ユーザー登録
     User user = authService.regUser(signUpForm);
 
-    AuthResponseDto responseDto = AuthResponseDto.builder()
-                                  .userId(user.getUserId())
-                                  .userName(user.getUserName())
-                                  .email(user.getEmail())
-                                  .build();
+    // responseDto作成
+    AuthResponseDto responseDto = authService.createAuthResponseDto(user);
+    
+    return new ResponseEntity<AuthResponseDto>(responseDto, HttpStatus.CREATED);
+  }
+  
+  @PostMapping("/sign-in")
+  public ResponseEntity<AuthResponseDto> signIn(@Valid @RequestBody SignInForm signInForm) {
+    log.info("サインインapi呼び出し成功");
+    
+    // ユーザー取得
+    User user = authService.getUser(signInForm);
+    
+    // responseDto作成
+    AuthResponseDto responseDto = authService.createAuthResponseDto(user);
 
     return new ResponseEntity<AuthResponseDto>(responseDto, HttpStatus.CREATED);
   }
