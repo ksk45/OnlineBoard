@@ -86,7 +86,11 @@ const SignInForm = (props: SignInFormProps) => {
       const errorData = await res.json();
       if (res.status === 400 || res.status === 401) {
         if (errorData.fieldErrors) {
-          fieldErrorSet(errorData.fieldErrors);
+          if (res.status === 400) {
+            fieldErrorSet(errorData.fieldErrors);
+          } else {
+            // 共通エラーフィールドにエラーメッセージをセット
+          }
         } else {
           alert(`予期せぬエラーが発生しました`);
         }
