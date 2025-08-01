@@ -70,6 +70,7 @@ public class GlobalExceptionConfig {
     return new ResponseEntity<>(problemDetail, HttpStatus.BAD_REQUEST);
   }
 
+  // サインアップ時、メールアドレス存在エラー発生後処理
   @ExceptionHandler(EmailAlreadyRegisteredException.class)
   public ResponseEntity<ProblemDetail> handleEmailAlreadyRegisterException(EmailAlreadyRegisteredException ex,
       WebRequest request) {
