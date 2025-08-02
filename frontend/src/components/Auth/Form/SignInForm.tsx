@@ -24,6 +24,7 @@ const SignInForm = (props: SignInFormProps) => {
   const [password, setPassword] = useState("");
   const [emailErr, setEmailErr] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
+  const errorMessage = false;
 
   // ユーザーコンテキスト取得
   const userContext = useUser();
@@ -60,6 +61,18 @@ const SignInForm = (props: SignInFormProps) => {
     setEmailErr(errorData.email || "");
     setPasswordErr(errorData.password || "");
   }
+
+  // POSTエラー時（ユーザー検出不可）、エラーセット
+  const setErrorMessage = () => {
+    if (errorMessage) {
+      return (
+        <div className=""></div>
+      )
+    } else {
+      return <></>
+    }
+  }
+
 
 
   // POSTapi呼び出し
@@ -102,6 +115,7 @@ const SignInForm = (props: SignInFormProps) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {errorMessage ? setErrorMessage() : <></>}
       <AuthInput
         type="email"
         errorMessage={emailErr}
