@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import type { AuthMode } from "../../../types/auth";
 import {
+  setUnexpectedErrorMessage,
+  setUserAuthErrorMessage,
   validateEmailFormat,
   validateMaxLength,
   validateMinLength,
@@ -9,6 +11,8 @@ import {
 } from "../../../utils/validation";
 import AuthInput from "../AuthInput";
 import AuthMainButton from "../AuthMainButton";
+import { useUser } from "../../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 // props定義
 type SignInFormProps = {
@@ -20,8 +24,14 @@ const SignInForm = (props: SignInFormProps) => {
   // useState定義
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [emailErr, setEmailErr] = useState("");
+  const [passwordErr, setPasswordErr] = useState("");
+  const [commonErrMessage, setCommonErrMessage] = useState("");
+
+  // ユーザーコンテキスト取得
+  const userContext = useUser();
+
+  const navigate = useNavigate();
 
   // バリデーション関数
   const isValid = () => {
@@ -32,7 +42,7 @@ const SignInForm = (props: SignInFormProps) => {
         validateMaxLength(email, 100),
         validateEmailFormat(email),
       ].find(Boolean) || "";
-    setEmailError(emailErr);
+    setEmailErr(emailErr);
 
     // パスワードバリデーション
     const passwordErr =
@@ -42,40 +52,76 @@ const SignInForm = (props: SignInFormProps) => {
         validateMaxLength(password, 64),
         validatePasswordComplexity(password),
       ].find(Boolean) || "";
-    setPasswordError(passwordErr);
+    setPasswordErr(passwordErr);
 
     // バリデーションエラーがあればfalseを返す
     return !emailErr && !passwordErr;
   };
 
+  // POSTエラー時、エラーセット
+  const fieldErrorSet = (errorData: Record<string, string>) => {
+    setEmailErr(errorData.email || "");
+    setPasswordErr(errorData.password || "");
+  }
+
   // POSTapi呼び出し
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     // submitのデフォルト挙動（ページ遷移）をキャンセル
     e.preventDefault();
+
+    // フォーム送信前にすべてのエラーメッセージをクリア
+    setEmailErr("");
+    setPasswordErr("");
+    setCommonErrMessage("");
+
     // バリデーションチェック
     if (!isValid()) return;
-  // const handleSubmit = async () => {
-    // const res = await fetch("/api/login", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ email, password }),
-    // });
-    /** バックエンド実装までのダミー st */
-    alert(`email: ${email} \npassword: ${password} \nログイン処理成功（ダミー）`);
-    /** バックエンド実装までのダミー ed */
+    const res = await fetch("/api/auth/sign-in", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      userContext.setUser({
+        userId: data.userId,
+        userName: data.userName,
+        email: data.email,
+      });
+      navigate("/menu");
+    } else {
+      const errorData = await res.json();
+      if (res.status === 400) {
+        if (errorData.fieldErrors) {
+          fieldErrorSet(errorData.fieldErrors);
+        } else {
+          setCommonErrMessage(setUnexpectedErrorMessage())
+        }
+      } else if (res.status === 401) {
+        setCommonErrMessage(setUserAuthErrorMessage())
+      } else {
+        setCommonErrMessage(setUnexpectedErrorMessage())
+      }
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {commonErrMessage && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+          {commonErrMessage}
+        </div>
+      )}
       <AuthInput
         type="email"
-        errorMessage={emailError}
+        errorMessage={emailErr}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <AuthInput
         type="pass"
-        errorMessage={passwordError}
+        errorMessage={passwordErr}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />

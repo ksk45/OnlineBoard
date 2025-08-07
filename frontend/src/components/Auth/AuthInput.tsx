@@ -67,7 +67,7 @@ const AuthInput = (props: AuthInputProps) => {
   );
 
   return (
-    <div>
+    <div onBlur={() => setIsVisible(false)}>
       <UIInput
         type={isVisible ? "text" : type}
         placeholder={placeholder}

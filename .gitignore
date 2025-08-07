@@ -60,3 +60,9 @@ yarn-error.log*
 
 ### Docker ###
 .docker/ 
+
+### Logs ###
+/logs*
+
+### Docs ###
+/docs*
