@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { AuthMode } from "../../../types/auth";
 import {
+  setUnexpectedErrorMessage,
   validateEmailFormat,
   validateLength,
   validateMaxLength,
@@ -29,7 +30,7 @@ const SignUpForm = (props: SignUpFormProps) => {
   const [emailErr, setEmailErr] = useState("");
   const [passNewErr, setPassNewErr] = useState("");
   const [passConfErr, setPassConfErr] = useState("");
-
+  const [commonErrMessage, setCommonErrMessage] = useState("");
   // ユーザーコンテキスト取得
   const userContext = useUser();
 
@@ -96,6 +97,14 @@ const SignUpForm = (props: SignUpFormProps) => {
     e.preventDefault();
     // バリデーションチェック
     if (!isValid()) return;
+
+    // フォーム送信前にすべてのエラーメッセージをクリア
+    setNameErr("");
+    setEmailErr("");
+    setPassNewErr("");
+    setPassConfErr("");
+    setCommonErrMessage("");
+
     const res = await fetch("/api/auth/sign-up", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -116,16 +125,21 @@ const SignUpForm = (props: SignUpFormProps) => {
         if (errorData.fieldErrors) {
           fieldErrorSet(errorData.fieldErrors);
         } else {
-          alert(`予期せぬエラーが発生しました`);
+          setCommonErrMessage(setUnexpectedErrorMessage())
         }
       } else {
-        alert(`予期せぬエラーが発生しました`);
+        setCommonErrMessage(setUnexpectedErrorMessage())
       }
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {commonErrMessage && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+          {commonErrMessage}
+        </div>
+      )}
       <AuthInput
         type="name"
         errorMessage={nameErr}

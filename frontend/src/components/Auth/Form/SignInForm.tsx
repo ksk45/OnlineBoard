@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import type { AuthMode } from "../../../types/auth";
 import {
+  setUnexpectedErrorMessage,
+  setUserAuthErrorMessage,
   validateEmailFormat,
   validateMaxLength,
   validateMinLength,
@@ -24,6 +26,7 @@ const SignInForm = (props: SignInFormProps) => {
   const [password, setPassword] = useState("");
   const [emailErr, setEmailErr] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
+  const [commonErrMessage, setCommonErrMessage] = useState("");
 
   // ユーザーコンテキスト取得
   const userContext = useUser();
@@ -61,14 +64,19 @@ const SignInForm = (props: SignInFormProps) => {
     setPasswordErr(errorData.password || "");
   }
 
-
   // POSTapi呼び出し
   const handleSubmit = async (e: React.FormEvent) => {
     // submitのデフォルト挙動（ページ遷移）をキャンセル
     e.preventDefault();
+
+    // フォーム送信前にすべてのエラーメッセージをクリア
+    setEmailErr("");
+    setPasswordErr("");
+    setCommonErrMessage("");
+
     // バリデーションチェック
     if (!isValid()) return;
-    const res = await fetch("/api/login", {
+    const res = await fetch("/api/auth/sign-in", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -84,20 +92,27 @@ const SignInForm = (props: SignInFormProps) => {
       navigate("/menu");
     } else {
       const errorData = await res.json();
-      if (res.status === 400 || res.status === 401) {
+      if (res.status === 400) {
         if (errorData.fieldErrors) {
           fieldErrorSet(errorData.fieldErrors);
         } else {
-          alert(`予期せぬエラーが発生しました`);
+          setCommonErrMessage(setUnexpectedErrorMessage())
         }
+      } else if (res.status === 401) {
+        setCommonErrMessage(setUserAuthErrorMessage())
       } else {
-        alert(`予期せぬエラーが発生しました`);
+        setCommonErrMessage(setUnexpectedErrorMessage())
       }
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {commonErrMessage && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+          {commonErrMessage}
+        </div>
+      )}
       <AuthInput
         type="email"
         errorMessage={emailErr}
