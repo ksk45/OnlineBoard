@@ -29,3 +29,7 @@ export const validatePasswordMatch = (value: string, valueConf: string) =>
 // ユーザー認証エラー時のエラーメッセージセット
 export const setUserAuthErrorMessage = () =>
   `入力されたメールアドレスまたはパスワードが正しくありません。`;
+
+// 予期せぬエラー時のエラーメッセージセット
+export const setUnexpectedErrorMessage = () =>
+  `予期せぬエラーが発生しました。`;

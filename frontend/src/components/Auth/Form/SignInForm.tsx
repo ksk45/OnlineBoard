@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { AuthMode } from "../../../types/auth";
 import {
+  setUnexpectedErrorMessage,
   setUserAuthErrorMessage,
   validateEmailFormat,
   validateMaxLength,
@@ -95,12 +96,12 @@ const SignInForm = (props: SignInFormProps) => {
         if (errorData.fieldErrors) {
           fieldErrorSet(errorData.fieldErrors);
         } else {
-          alert(`予期せぬエラーが発生しました`);
+          setCommonErrMessage(setUnexpectedErrorMessage())
         }
       } else if (res.status === 401) {
         setCommonErrMessage(setUserAuthErrorMessage())
       } else {
-        alert(`予期せぬエラーが発生しました`);
+        setCommonErrMessage(setUnexpectedErrorMessage())
       }
     }
   };

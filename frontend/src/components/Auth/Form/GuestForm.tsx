@@ -10,6 +10,7 @@ const GuestForm = () => {
   // useState定義
   const [name, setName] = useState("");
   const [nameErr, setNameErr] = useState("");
+  const [commonErrMessage, setCommonErrMessage] = useState("");
 
   // ユーザーコンテキスト取得
   const userContext = useUser();
@@ -34,18 +35,25 @@ const GuestForm = () => {
     // バリデーションチェック
     if (!isValid()) return;
 
+    // フォーム送信前にすべてのエラーメッセージをクリア
+    setNameErr("");
+    setCommonErrMessage("");
+
     userContext.setUser({
       userId: -1,
       userName: name,
       email: "guest",
     });
     navigate("/menu");
-    // alert(`name: ${name}\nログイン処理成功（ダミー）`)
-
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {commonErrMessage && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+          {commonErrMessage}
+        </div>
+      )}
       <AuthInput
         errorMessage={nameErr}
         type="name"
