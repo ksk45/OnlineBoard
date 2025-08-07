@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { AuthMode } from "../../../types/auth";
 import {
+  setUserAuthErrorMessage,
   validateEmailFormat,
   validateMaxLength,
   validateMinLength,
@@ -24,7 +25,7 @@ const SignInForm = (props: SignInFormProps) => {
   const [password, setPassword] = useState("");
   const [emailErr, setEmailErr] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
-  const errorMessage = false;
+  const [commonErrMessage, setCommonErrMessage] = useState("");
 
   // ユーザーコンテキスト取得
   const userContext = useUser();
@@ -62,25 +63,16 @@ const SignInForm = (props: SignInFormProps) => {
     setPasswordErr(errorData.password || "");
   }
 
-  // POSTエラー時（ユーザー検出不可）、エラーセット
-  const setErrorMessage = () => {
-    if (errorMessage) {
-      return (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
-          {errorMessage}
-        </div>
-      )
-    } else {
-      return <></>
-    }
-  }
-
-
-
   // POSTapi呼び出し
   const handleSubmit = async (e: React.FormEvent) => {
     // submitのデフォルト挙動（ページ遷移）をキャンセル
     e.preventDefault();
+
+    // フォーム送信前にすべてのエラーメッセージをクリア
+    setEmailErr("");
+    setPasswordErr("");
+    setCommonErrMessage("");
+
     // バリデーションチェック
     if (!isValid()) return;
     const res = await fetch("/api/auth/sign-in", {
@@ -99,16 +91,14 @@ const SignInForm = (props: SignInFormProps) => {
       navigate("/menu");
     } else {
       const errorData = await res.json();
-      if (res.status === 400 || res.status === 401) {
+      if (res.status === 400) {
         if (errorData.fieldErrors) {
-          if (res.status === 400) {
-            fieldErrorSet(errorData.fieldErrors);
-          } else {
-            // 共通エラーフィールドにエラーメッセージをセット
-          }
+          fieldErrorSet(errorData.fieldErrors);
         } else {
           alert(`予期せぬエラーが発生しました`);
         }
+      } else if (res.status === 401) {
+        setCommonErrMessage(setUserAuthErrorMessage())
       } else {
         alert(`予期せぬエラーが発生しました`);
       }
@@ -117,7 +107,11 @@ const SignInForm = (props: SignInFormProps) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {errorMessage ? setErrorMessage() : <></>}
+      {commonErrMessage && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+          {commonErrMessage}
+        </div>
+      )}
       <AuthInput
         type="email"
         errorMessage={emailErr}
