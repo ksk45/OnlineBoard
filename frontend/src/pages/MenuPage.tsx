@@ -1,3 +1,4 @@
+import MenuHeader from "../components/Menu/MenuHeader";
 import { useUser } from "../contexts/UserContext";
 
 const MenuPage = () => {
@@ -5,6 +6,7 @@ const MenuPage = () => {
 
   return (
     <div>
+      <MenuHeader />
       <h1>メニュー</h1>
       <p>ここにメニューの内容が表示されます。</p>
 	  <p>現在のユーザー</p>
