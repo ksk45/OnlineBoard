@@ -28,10 +28,12 @@ const MenuHeaderRightContent = () => {
       </div>
 
       {/* ユーザー名 */}
-      <div className="flex flex-col w-20">
-        <span className="text-base font-semibold text-gray-800">{userName}</span>
-        <span className="text-sm text-gray-500">{userContext.user ? "" : "Guest User"}</span>
-      </div>
+      <button>
+        <div className="flex flex-col w-20">
+          <span className="text-base font-semibold text-gray-800">{userName}</span>
+          <span className="text-sm text-gray-500">{userContext.user ? "" : "Guest User"}</span>
+        </div>
+      </button>
     </div>
   )
 }
