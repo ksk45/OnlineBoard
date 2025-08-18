@@ -2,7 +2,6 @@ import { Palette } from "lucide-react";
 import UIHeader from "../ui/UIHeader";
 import { useUser } from "../../contexts/UserContext";
 
-
 const MenuHeaderLeftContent = () => {
   return (
     <div className="flex items-center justify-center">
@@ -11,14 +10,14 @@ const MenuHeaderLeftContent = () => {
       </div>
       <h1 className="text-2xl font-bold m-0 p-0">OnlineBoard</h1>
     </div>
-  )
-}
+  );
+};
 
 const MenuHeaderRightContent = () => {
   const userContext = useUser();
   const userName = userContext.user ? userContext.user.userName : "AAA";
   const iconChar = userName ? userName[0] : "AAA";
-  
+
   return (
     <div className="flex items-center space-x-2">
       {/* ユーザーアイコン */}
@@ -30,16 +29,25 @@ const MenuHeaderRightContent = () => {
       {/* ユーザー名 */}
       <button>
         <div className="flex flex-col w-20">
-          <span className="text-base font-semibold text-gray-800">{userName}</span>
-          <span className="text-sm text-gray-500">{userContext.user ? "" : "Guest User"}</span>
+          <span className="text-base font-semibold text-gray-800">
+            {userName}
+          </span>
+          <span className="text-sm text-gray-500">
+            {userContext.user ? "" : "Guest User"}
+          </span>
         </div>
       </button>
     </div>
-  )
-}
+  );
+};
 
 const MenuHeader = () => {
-  return <UIHeader leftContent={MenuHeaderLeftContent()} rightContent={MenuHeaderRightContent()} />;
+  return (
+    <UIHeader
+      leftContent={MenuHeaderLeftContent()}
+      rightContent={MenuHeaderRightContent()}
+    />
+  );
 };
 
 export default MenuHeader;
