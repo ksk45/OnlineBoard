@@ -15,7 +15,7 @@ const inputField = tv({
   slots: {
     label: "mb-2 block text-sm font-medium text-gray-900",
     input:
-      "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm pl-10",
+      "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm pl-3",
     error: "mt-2 text-sm text-red-600",
   },
   // variants 条件に応じて追加・変更するcssを定義
@@ -27,6 +27,11 @@ const inputField = tv({
           "border-red-500 bg-red-50 text-red-900 placeholder-red-700 focus:border",
       },
     },
+    leftIcon: {
+      true: {
+        input: "pl-10"
+      }
+    }
   },
 });
 
@@ -41,6 +46,7 @@ const UIInput = ({
 }: UIInputProps) => {
   const { label, input, error } = inputField({
     error: !!errorMessage,
+    leftIcon: !!leftIcon,
   });
 
   return (
