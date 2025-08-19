@@ -22,7 +22,7 @@ const AuthSubActions = (props: AuthSubActionsProps) => {
         <div className="flex space-x-4">
           <div className="w-full">
             <UIButton
-              className="bg-slate-300 text-slate-700"
+              className="bg-slate-200 text-slate-700 hover:bg-slate-300 focus:bg-slate-300"
               onClick={() => props.handleSetAuthMode("signUp")}
             >
               <UserPlus size="20" />
@@ -31,7 +31,7 @@ const AuthSubActions = (props: AuthSubActionsProps) => {
           </div>
           <div className="w-full">
             <UIButton
-              className="bg-emerald-200 text-emerald-600"
+              className="bg-emerald-100 text-emerald-600 hover:bg-emerald-200 focus:bg-emerald-200"
               onClick={() => props.handleSetAuthMode("guest")}
             >
               <User size="20" />
@@ -45,7 +45,7 @@ const AuthSubActions = (props: AuthSubActionsProps) => {
 
   return (
     <div className="flex justify-center">
-      <button className="text-slate-600" onClick={() => props.handleSetAuthMode("signIn")}>
+      <button className="text-slate-600 cursor-pointer" onClick={() => props.handleSetAuthMode("signIn")}>
         ←&emsp;Back to Sign In
       </button>
     </div>

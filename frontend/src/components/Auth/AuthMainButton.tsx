@@ -36,9 +36,12 @@ const getButtonLabel = (authMode: AuthMode) => {
 
 // ボタンごとのスタイル定義
 const getButtonGradient: Record<AuthMode, string> = {
-  signIn: "from-blue-500 to-purple-600",
-  signUp: "from-green-500 to-teal-600",
-  guest: "from-orange-500 to-pink-600",
+  signIn:
+    "from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 focus:from-blue-600 focus:to-purple-700",
+  signUp:
+    "from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 focus:from-green-600 focus:to-teal-700",
+  guest:
+    "from-orange-500 to-pink-600 hover:from-orange-600 hover:to-pink-700 focus:from-orange-600 focus:to-pink-700",
 };
 
 const AuthMainButton = ({ authMode }: AuthMainButtonProps) => {

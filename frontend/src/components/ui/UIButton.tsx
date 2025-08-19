@@ -10,7 +10,7 @@ interface UIButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const UIButton = ({ children, className = "", ...props }: UIButtonProps) => {
   return (
     <button
-      className={`w-full h-10 mx-auto rounded-xl flex items-center justify-center space-x-2 ${className}`}
+      className={`w-full h-10 mx-auto rounded-xl flex items-center justify-center space-x-2 cursor-pointer ${className}`}
       {...props}
     >
       {children}

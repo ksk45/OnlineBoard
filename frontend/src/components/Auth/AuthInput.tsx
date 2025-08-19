@@ -58,7 +58,7 @@ const AuthInput = (props: AuthInputProps) => {
     <button
       type="button"
       onClick={() => setIsVisible(!isVisible)}
-      className="absolute right-2 text-gray-400"
+      className="absolute right-2 text-gray-400 cursor-pointer"
       tabIndex={-1}
     >
       {(props.type === "pass" || props.type === "pass_new") &&
