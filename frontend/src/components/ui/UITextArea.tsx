@@ -15,7 +15,7 @@ const inputField = tv({
   slots: {
     label: "mb-2 block text-sm font-medium text-gray-900",
     textarea:
-      "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm pl-3",
+      "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm pl-3 h-25",
     error: "mt-2 text-sm text-red-600",
   },
   // variants 条件に応じて追加・変更するcssを定義
