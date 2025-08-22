@@ -12,7 +12,6 @@ const AuthPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  
   // authModeとURLを同時に変更する関数
   const handleSetAuthMode = (mode: AuthMode) => {
     setAuthMode(mode);
@@ -52,7 +51,10 @@ const AuthPage = () => {
         <AuthHeader authMode={authMode} />
         <div className="bg-white w-full h-auto p-15 rounded-2xl space-y-5 shadow-2xl">
           {inputForm[authMode]}
-          <AuthSubActions authMode={authMode} handleSetAuthMode={handleSetAuthMode} />
+          <AuthSubActions
+            authMode={authMode}
+            handleSetAuthMode={handleSetAuthMode}
+          />
         </div>
       </div>
     </div>
