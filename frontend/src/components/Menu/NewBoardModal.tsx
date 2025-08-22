@@ -2,16 +2,47 @@ import { X } from "lucide-react";
 import UIButton from "../ui/UIButton";
 import UIInput from "../ui/UIInput";
 import UITextArea from "../ui/UITextArea";
+import type React from "react";
+import { useState } from "react";
+import { validateMaxLength, validateRequired } from "../../utils/validation";
 
 type NewBoardModalProps = {
   isOpen: boolean;
   onClose: () => void;
 };
 
+
 const NewBoardModal = (props: NewBoardModalProps) => {
+  
+  // useState定義
+  const [wbName, setWbName] = useState("");
+  const [wbDesc, setWbDesc] = useState("");
+  const [wbNameErr, setWbNameErr] = useState("");
+
   // isOpenがfalseの場合は何も表示しない
   if (!props.isOpen) {
     return null;
+  }
+
+  // バリデーション定義
+  const isValid = () => {
+    const wbNameErr = [
+      validateRequired(wbName, "ホワイトボード名は必須です"),
+      validateMaxLength(wbName, 50),
+    ].find(Boolean) || "";
+    setWbNameErr(wbNameErr);
+
+    return !wbNameErr;
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    // submitのデフォルト挙動（ページ遷移）をキャンセル
+    e.preventDefault();
+    // バリデーションチェック
+    if (!isValid()) return;
+
+    alert(`wbName: ${wbName}, wbDesc: ${wbDesc}`);
+    
   }
 
   return (
@@ -31,10 +62,16 @@ const NewBoardModal = (props: NewBoardModalProps) => {
           <UIInput
             inputLabel="WhiteBoard Name *"
             placeholder="Enter whiteboard name"
+            type="text"
+            value={wbName}
+            onChange={(e) => setWbName(e.target.value)}
+            errorMessage={wbNameErr}
           />
           <UITextArea
             inputLabel="Description"
             placeholder="Optional description..."
+            value={wbDesc}
+            onChange={(e) => setWbDesc(e.target.value)}
           />
           <div className="flex justify-end space-x-2">
             <div className="w-23">
