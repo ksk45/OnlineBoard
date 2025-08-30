@@ -2,7 +2,9 @@ package io.github.ksk45.onlineboard.Service.Board;
 
 import org.springframework.stereotype.Service;
 
+import io.github.ksk45.onlineboard.Model.Entity.Board;
 import io.github.ksk45.onlineboard.Model.Form.Board.BoardCreateForm;
+import io.github.ksk45.onlineboard.Repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,10 +13,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BoardServiceImpl implements BoardService {
 
+  private final BoardRepository boardRepository;
+
   @Override
-  public void boardCreate(BoardCreateForm boardCreateForm) {
+  public Board boardCreate(BoardCreateForm boardCreateForm) {
+
+    Board boardEntity =  Board.builder()
+        .boardName(boardCreateForm.getWbName())
+        .boardDesc(boardCreateForm.getWbDesc())
+        .boardOwnerId(boardCreateForm.getUserContext().getUserId())
+        .build();
     
     // boardテーブルへのinsert sql発行
+    return boardRepository.save(boardEntity);
   }
   
 }
