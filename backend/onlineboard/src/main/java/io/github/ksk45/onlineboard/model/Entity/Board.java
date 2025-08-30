@@ -20,7 +20,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "t_boards")
+@Table(name = "t_board")
 public class Board extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
