@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import io.github.ksk45.onlineboard.Model.Entity.Board;
 import io.github.ksk45.onlineboard.Model.Form.Board.BoardCreateForm;
+import io.github.ksk45.onlineboard.Model.Response.BoardResponseDto;
 import io.github.ksk45.onlineboard.Repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,4 +29,13 @@ public class BoardServiceImpl implements BoardService {
     return boardRepository.save(boardEntity);
   }
   
+  @Override
+  public BoardResponseDto createBoardResponseDto(Board board) {
+    return BoardResponseDto.builder()
+                          .boardId(board.getBoardId())
+                          .boardName(board.getBoardName())
+                          .boardDesc(board.getBoardDesc())
+                          .boardOwnerId(board.getBoardOwnerId())
+                          .build();
+  }
 }
