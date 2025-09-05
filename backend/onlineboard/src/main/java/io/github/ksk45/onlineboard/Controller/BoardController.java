@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.github.ksk45.onlineboard.Model.Entity.Board;
 import io.github.ksk45.onlineboard.Model.Form.Board.BoardCreateForm;
-import io.github.ksk45.onlineboard.Model.Form.Common.UserContext;
 import io.github.ksk45.onlineboard.Model.Response.BoardResponseDto;
 import io.github.ksk45.onlineboard.Service.Board.BoardService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,11 +25,7 @@ public class BoardController {
   private final BoardService boardService;
   
   @PostMapping("/create")
-  public ResponseEntity<BoardResponseDto> boardCreate(@RequestBody BoardCreateForm boardCreateForm) {
-
-    // テストコード
-    boardCreateForm.setUserContext(UserContext.builder().userId(0).build());
-    // テストコード
+  public ResponseEntity<BoardResponseDto> boardCreate(@Valid@RequestBody BoardCreateForm boardCreateForm) {
 
     Board board = boardService.boardCreate(boardCreateForm);
     
