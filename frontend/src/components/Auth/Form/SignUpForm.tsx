@@ -7,12 +7,13 @@ import {
   validateMaxLength,
   validatePasswordComplexity,
   validatePasswordMatch,
-  validateRequired
+  validateRequired,
 } from "../../../utils/validation";
 import AuthInput from "../AuthInput";
 import AuthMainButton from "../AuthMainButton";
 import { useUser } from "../../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
+import UIErrorMessage from "../../ui/UIErrorField";
 
 // props定義
 type SignUpFormProps = {
@@ -35,7 +36,6 @@ const SignUpForm = (props: SignUpFormProps) => {
   const userContext = useUser();
 
   const navigate = useNavigate();
-  
 
   // バリデーション定義
   const isValid = () => {
@@ -66,10 +66,10 @@ const SignUpForm = (props: SignUpFormProps) => {
         validatePasswordComplexity(passNew),
         validatePasswordMatch(passNew, passConf),
       ].find(Boolean) || "";
-      setPassNewErr(passNewErr);
-      
-      // Confirmパスワードバリデーション
-      const passConfErr =
+    setPassNewErr(passNewErr);
+
+    // Confirmパスワードバリデーション
+    const passConfErr =
       [
         validateRequired(passConf, "パスワードは必須です"),
         // validateMinLength(passConf, 8),
@@ -89,7 +89,7 @@ const SignUpForm = (props: SignUpFormProps) => {
     setEmailErr(errors.email || "");
     setPassNewErr(errors.passNew || "");
     setPassConfErr(errors.passConf || "");
-  }
+  };
 
   // POSTapi呼び出し
   const handleSubmit = async (e: React.FormEvent) => {
@@ -110,7 +110,7 @@ const SignUpForm = (props: SignUpFormProps) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, passNew, passConf }),
     });
-    
+
     if (res.ok) {
       const data = await res.json();
       userContext.setUser({
@@ -125,21 +125,17 @@ const SignUpForm = (props: SignUpFormProps) => {
         if (errorData.fieldErrors) {
           fieldErrorSet(errorData.fieldErrors);
         } else {
-          setCommonErrMessage(setUnexpectedErrorMessage())
+          setCommonErrMessage(setUnexpectedErrorMessage());
         }
       } else {
-        setCommonErrMessage(setUnexpectedErrorMessage())
+        setCommonErrMessage(setUnexpectedErrorMessage());
       }
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {commonErrMessage && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
-          {commonErrMessage}
-        </div>
-      )}
+      {commonErrMessage && <UIErrorMessage errorMessage={commonErrMessage} />}
       <AuthInput
         type="name"
         errorMessage={nameErr}
