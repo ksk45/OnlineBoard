@@ -26,6 +26,9 @@ public class Board extends AuditableEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer boardId;
 
+    @Column(nullable = false, unique = true)
+    private String boardUuid;
+
     @Column(nullable = false)
     private String boardName;
 

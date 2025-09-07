@@ -16,6 +16,6 @@ public class BoardCreateForm {
   @Size(max = 200, message = "{VALIDATION_MAX_LENGTH}")
   private String wbDesc;
 
-  @ValidUserContext(message = "{VALIDATION_USER_CONTEXT_INVALID}") 
+  @ValidUserContext(message = "{VALIDATION_USER_CONTEXT_INVALID}")
   private UserContext userContext;
 }

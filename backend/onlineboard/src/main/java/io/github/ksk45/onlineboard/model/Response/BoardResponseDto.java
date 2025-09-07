@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class BoardResponseDto {
   
-  private Integer boardId;
+  private String boardUuid;
   private String boardName;
   private String boardDesc;
   private Integer boardOwnerId;

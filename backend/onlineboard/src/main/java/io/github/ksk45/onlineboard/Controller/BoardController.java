@@ -25,8 +25,9 @@ public class BoardController {
   private final BoardService boardService;
   
   @PostMapping("/create")
-  public ResponseEntity<BoardResponseDto> boardCreate(@Valid@RequestBody BoardCreateForm boardCreateForm) {
+  public ResponseEntity<BoardResponseDto> boardCreate(@Valid @RequestBody BoardCreateForm boardCreateForm) {
 
+    // ボード登録
     Board board = boardService.boardCreate(boardCreateForm);
     
     // responseDto作成

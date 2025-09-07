@@ -1,5 +1,7 @@
 package io.github.ksk45.onlineboard.Service.Board;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import io.github.ksk45.onlineboard.Model.Entity.Board;
@@ -20,6 +22,7 @@ public class BoardServiceImpl implements BoardService {
   public Board boardCreate(BoardCreateForm boardCreateForm) {
 
     Board boardEntity =  Board.builder()
+        .boardUuid(UUID.randomUUID().toString())
         .boardName(boardCreateForm.getWbName())
         .boardDesc(boardCreateForm.getWbDesc())
         .boardOwnerId(boardCreateForm.getUserContext().getUserId())
@@ -32,7 +35,7 @@ public class BoardServiceImpl implements BoardService {
   @Override
   public BoardResponseDto createBoardResponseDto(Board board) {
     return BoardResponseDto.builder()
-                          .boardId(board.getBoardId())
+                          .boardUuid(board.getBoardUuid())
                           .boardName(board.getBoardName())
                           .boardDesc(board.getBoardDesc())
                           .boardOwnerId(board.getBoardOwnerId())
