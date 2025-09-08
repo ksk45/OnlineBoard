@@ -6,6 +6,7 @@ import type React from "react";
 import { useState } from "react";
 import { validateMaxLength, validateRequired } from "../../utils/validation";
 import { useUser } from "../../contexts/UserContext";
+import UIErrorField from "../ui/UIErrorField";
 
 type NewBoardModalProps = {
   isOpen: boolean;
@@ -20,6 +21,7 @@ const NewBoardModal = (props: NewBoardModalProps) => {
   const [wbName, setWbName] = useState("");
   const [wbDesc, setWbDesc] = useState("");
   const [wbNameErr, setWbNameErr] = useState("");
+  const [commonErrMessage, setCommonErrMessage] = useState("");
 
   // isOpenがfalseの場合は何も表示しない
   if (!props.isOpen) {
@@ -43,12 +45,14 @@ const NewBoardModal = (props: NewBoardModalProps) => {
     // バリデーションチェック
     if (!isValid()) return;
 
-    // alert(`wbName: ${wbName}, wbDesc: ${wbDesc}, userContext: ${userContext}`);
+    // フォーム送信前にすべてのエラーメッセージをクリア
+    setWbNameErr("");
+    setCommonErrMessage("");
 
     const res = await fetch("api/board/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ wbName, wbDesc, userContext }),
+      body: JSON.stringify({ wbName, wbDesc, userContext: userContext.user }),
     });
     
     if (res.ok) {
@@ -72,6 +76,7 @@ const NewBoardModal = (props: NewBoardModalProps) => {
         </div>
 
         <form onSubmit={handleSubmit} className="px-5 space-y-4">
+          {commonErrMessage && <UIErrorField errorMessage={commonErrMessage} />}
           <UIInput
             inputLabel="WhiteBoard Name *"
             placeholder="Enter whiteboard name"
