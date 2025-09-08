@@ -4,6 +4,7 @@ import { validateMaxLength, validateRequired } from "../../../utils/validation";
 import AuthMainButton from "../AuthMainButton";
 import { useUser } from "../../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
+import UIErrorField from "../../ui/UIErrorField";
 
 // ゲストログイン
 const GuestForm = () => {
@@ -49,11 +50,7 @@ const GuestForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {commonErrMessage && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
-          {commonErrMessage}
-        </div>
-      )}
+      {commonErrMessage && <UIErrorField errorMessage={commonErrMessage} />}
       <AuthInput
         errorMessage={nameErr}
         type="name"

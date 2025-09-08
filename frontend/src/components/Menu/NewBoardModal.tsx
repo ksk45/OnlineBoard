@@ -5,6 +5,7 @@ import UITextArea from "../ui/UITextArea";
 import type React from "react";
 import { useState } from "react";
 import { validateMaxLength, validateRequired } from "../../utils/validation";
+import { useUser } from "../../contexts/UserContext";
 
 type NewBoardModalProps = {
   isOpen: boolean;
@@ -14,6 +15,7 @@ type NewBoardModalProps = {
 
 const NewBoardModal = (props: NewBoardModalProps) => {
   
+  const userContext = useUser();
   // useState定義
   const [wbName, setWbName] = useState("");
   const [wbDesc, setWbDesc] = useState("");
@@ -35,14 +37,25 @@ const NewBoardModal = (props: NewBoardModalProps) => {
     return !wbNameErr;
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     // submitのデフォルト挙動（ページ遷移）をキャンセル
     e.preventDefault();
     // バリデーションチェック
     if (!isValid()) return;
 
-    alert(`wbName: ${wbName}, wbDesc: ${wbDesc}`);
+    // alert(`wbName: ${wbName}, wbDesc: ${wbDesc}, userContext: ${userContext}`);
+
+    const res = await fetch("api/board/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ wbName, wbDesc, userContext }),
+    });
     
+    if (res.ok) {
+      console.log("処理成功");
+    } else {
+      console.log("処理失敗");
+    }
   }
 
   return (

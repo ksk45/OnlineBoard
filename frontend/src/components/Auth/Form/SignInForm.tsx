@@ -13,6 +13,7 @@ import AuthInput from "../AuthInput";
 import AuthMainButton from "../AuthMainButton";
 import { useUser } from "../../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
+import UIErrorField from "../../ui/UIErrorField";
 
 // props定義
 type SignInFormProps = {
@@ -62,7 +63,7 @@ const SignInForm = (props: SignInFormProps) => {
   const fieldErrorSet = (errorData: Record<string, string>) => {
     setEmailErr(errorData.email || "");
     setPasswordErr(errorData.password || "");
-  }
+  };
 
   // POSTapi呼び出し
   const handleSubmit = async (e: React.FormEvent) => {
@@ -96,23 +97,19 @@ const SignInForm = (props: SignInFormProps) => {
         if (errorData.fieldErrors) {
           fieldErrorSet(errorData.fieldErrors);
         } else {
-          setCommonErrMessage(setUnexpectedErrorMessage())
+          setCommonErrMessage(setUnexpectedErrorMessage());
         }
       } else if (res.status === 401) {
-        setCommonErrMessage(setUserAuthErrorMessage())
+        setCommonErrMessage(setUserAuthErrorMessage());
       } else {
-        setCommonErrMessage(setUnexpectedErrorMessage())
+        setCommonErrMessage(setUnexpectedErrorMessage());
       }
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {commonErrMessage && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
-          {commonErrMessage}
-        </div>
-      )}
+      {commonErrMessage && <UIErrorField errorMessage={commonErrMessage} />}
       <AuthInput
         type="email"
         errorMessage={emailErr}

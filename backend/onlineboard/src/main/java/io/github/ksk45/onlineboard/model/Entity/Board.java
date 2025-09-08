@@ -1,39 +1,41 @@
-// package io.github.ksk45.onlineboard.Model.Entity;
+package io.github.ksk45.onlineboard.Model.Entity;
 
-// import jakarta.persistence.*;
-// import lombok.Data;
-// import lombok.NoArgsConstructor;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-// @Data
-// @NoArgsConstructor
-// @Entity
-// @Table(name = "boards")
-// public class Board {
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "t_board")
+public class Board extends AuditableEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer boardId;
 
-//     @Column(nullable = false)
-//     private String title;
+    @Column(nullable = false, unique = true)
+    private String boardUuid;
 
-//     @ManyToOne(fetch = FetchType.LAZY)
-//     @JoinColumn(name = "owner_id", nullable = false)
-//     private User owner;
+    @Column(nullable = false)
+    private String boardName;
 
-//     @Column(name = "created_at")
-//     private java.time.LocalDateTime createdAt;
+    @Column(nullable = true)
+    private String boardDesc;
 
-//     @Column(name = "updated_at")
-//     private java.time.LocalDateTime updatedAt;
+    @Column(nullable = false)
+    private Integer boardOwnerId;
 
-//     @PrePersist
-//     protected void onCreate() {
-//         createdAt = java.time.LocalDateTime.now();
-//         updatedAt = java.time.LocalDateTime.now();
-//     }
-
-//     @PreUpdate
-//     protected void onUpdate() {
-//         updatedAt = java.time.LocalDateTime.now();
-//     }
-// } 
+} 
