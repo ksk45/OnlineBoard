@@ -21,4 +21,12 @@ public interface BoardService {
    * @return BoardResponseDto ボード新規作成用Dto
    */
   public BoardResponseDto createBoardResponseDto(Board board);
+
+  /**
+   * ボードメンバー情報のDB登録
+   *
+   * @param boardId ボードID
+   * @param userId ユーザーID
+   */
+  public void boardMemberCreate(Integer boardId, Integer userId);
 }
