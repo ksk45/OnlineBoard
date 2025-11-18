@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import io.github.ksk45.onlineboard.Model.Entity.Board;
 import io.github.ksk45.onlineboard.Model.Entity.BoardMember;
-import io.github.ksk45.onlineboard.Model.Entity.BoardMemberId;
+import io.github.ksk45.onlineboard.Model.Entity.BoardMember.BoardMemberId;
 import io.github.ksk45.onlineboard.Model.Form.Board.BoardCreateForm;
 import io.github.ksk45.onlineboard.Model.Response.BoardResponseDto;
 import io.github.ksk45.onlineboard.Repository.BoardMemberRepository;
@@ -49,7 +49,7 @@ public class BoardServiceImpl implements BoardService {
   @Override
   public void boardMemberCreate(Integer boardId, Integer userId) {
     BoardMember boardMemberEntity = BoardMember.builder()
-        .boardMember(BoardMember.BoardMemberId.builder()
+        .boardMember(BoardMemberId.builder()
             .boardId(boardId)
             .userId(userId)
             .build()
