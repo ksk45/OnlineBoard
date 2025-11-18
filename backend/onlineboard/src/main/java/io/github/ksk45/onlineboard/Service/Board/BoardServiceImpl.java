@@ -49,7 +49,7 @@ public class BoardServiceImpl implements BoardService {
   @Override
   public void boardMemberCreate(Integer boardId, Integer userId) {
     BoardMember boardMemberEntity = BoardMember.builder()
-        .boardMember(BoardMemberId.builder()
+        .boardMember(BoardMember.BoardMemberId.builder()
             .boardId(boardId)
             .userId(userId)
             .build()
