@@ -29,6 +29,9 @@ public class BoardController {
 
     // ボード登録
     Board board = boardService.boardCreate(boardCreateForm);
+
+    // ボードメンバー登録
+    boardService.boardMemberCreate(board.getBoardId(), boardCreateForm.getUserContext().getUserId());
     
     // responseDto作成
     BoardResponseDto responseDto = boardService.createBoardResponseDto(board);
