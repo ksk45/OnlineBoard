@@ -1,12 +1,13 @@
 import { X } from "lucide-react";
-import UIButton from "../ui/UIButton";
-import UIInput from "../ui/UIInput";
-import UITextArea from "../ui/UITextArea";
 import type React from "react";
 import { useState } from "react";
-import { validateMaxLength, validateRequired } from "../../utils/validation";
+import { useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
+import { validateMaxLength, validateRequired } from "../../utils/validation";
+import UIButton from "../ui/UIButton";
 import UIErrorField from "../ui/UIErrorField";
+import UIInput from "../ui/UIInput";
+import UITextArea from "../ui/UITextArea";
 
 type NewBoardModalProps = {
   isOpen: boolean;
@@ -22,6 +23,8 @@ const NewBoardModal = (props: NewBoardModalProps) => {
   const [wbDesc, setWbDesc] = useState("");
   const [wbNameErr, setWbNameErr] = useState("");
   const [commonErrMessage, setCommonErrMessage] = useState("");
+
+  const navigate = useNavigate();
 
   // isOpenがfalseの場合は何も表示しない
   if (!props.isOpen) {
@@ -56,7 +59,9 @@ const NewBoardModal = (props: NewBoardModalProps) => {
     });
     
     if (res.ok) {
+      const data = await res.json();
       console.log("処理成功");
+      navigate(`/board/${data.boardUuid}`);
     } else {
       console.log("処理失敗");
     }
