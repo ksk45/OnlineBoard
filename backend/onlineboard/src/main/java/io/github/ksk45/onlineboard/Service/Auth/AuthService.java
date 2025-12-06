@@ -33,8 +33,15 @@ public interface AuthService {
   public User getUser(SignInForm signInForm);
 
   /**
+   * セッション情報の登録
+   *
+   * @param user
+  */
+  public void setSessionData(User user);
+
+  /**
    * 画面返却用Dto作成
-   * 
+   *
    * @param User ユーザーEntity
    * @return AuthResponseDto サインイン・サインアップ用Dto
    */
