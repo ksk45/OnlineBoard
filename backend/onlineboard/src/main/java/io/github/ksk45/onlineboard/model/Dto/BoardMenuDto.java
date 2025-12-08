@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class BoardDto {
+public class BoardMenuDto {
 
   private String boardUuid;
   private String boardName;
