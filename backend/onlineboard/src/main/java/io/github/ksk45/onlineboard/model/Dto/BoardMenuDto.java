@@ -1,5 +1,7 @@
 package io.github.ksk45.onlineboard.Model.Dto;
 
+import java.time.LocalDateTime;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,8 +11,8 @@ public class BoardMenuDto {
 
   private String boardUuid;
   private String boardName;
-  private String boardDesc;
   private Integer boardOwnerId;
-  private Integer collaboratorNum;
+  private LocalDateTime boardCreatedAt;
+  private Integer memberCount;
 
 }
