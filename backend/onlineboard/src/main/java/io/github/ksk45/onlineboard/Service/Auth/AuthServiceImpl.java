@@ -1,5 +1,6 @@
 package io.github.ksk45.onlineboard.Service.Auth;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import io.github.ksk45.onlineboard.Model.Form.Auth.SignInForm;
 import io.github.ksk45.onlineboard.Model.Form.Auth.SignUpForm;
 import io.github.ksk45.onlineboard.Model.Response.AuthResponseDto;
 import io.github.ksk45.onlineboard.Repository.UserRepository;
+import io.github.ksk45.onlineboard.Session.SessionUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthServiceImpl implements AuthService {
 
   private final UserRepository userRepository;
+  private final SessionUser sessionUser;
 
   @Override
   public void isEmailExsists(String email) throws EmailAlreadyRegisteredException {
@@ -56,6 +59,15 @@ public class AuthServiceImpl implements AuthService {
     }
 
     return user.get(0);
+  }
+
+  @Override
+  public void setSessionData(User user) {
+    sessionUser.setUserId(user.getUserId());
+    sessionUser.setUserName(user.getUserName());
+    sessionUser.setUserEmail(user.getEmail());
+    sessionUser.setLoginTime(LocalDateTime.now());
+    sessionUser.setAccessTime(LocalDateTime.now());
   }
 
   @Override

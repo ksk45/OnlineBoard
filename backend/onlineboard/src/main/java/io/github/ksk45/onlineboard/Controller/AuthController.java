@@ -34,19 +34,25 @@ public class AuthController {
     // ユーザー登録
     User user = authService.regUser(signUpForm);
 
+    // セッションの登録
+    authService.setSessionData(user);
+
     // responseDto作成
     AuthResponseDto responseDto = authService.createAuthResponseDto(user);
-    
+
     return new ResponseEntity<AuthResponseDto>(responseDto, HttpStatus.CREATED);
   }
   
   @PostMapping("/sign-in")
   public ResponseEntity<AuthResponseDto> signIn(@Valid @RequestBody SignInForm signInForm) {
     log.info("サインインapi呼び出し成功");
-    
+
     // ユーザー取得
     User user = authService.getUser(signInForm);
-    
+
+    // セッションの登録
+    authService.setSessionData(user);
+
     // responseDto作成
     AuthResponseDto responseDto = authService.createAuthResponseDto(user);
 
