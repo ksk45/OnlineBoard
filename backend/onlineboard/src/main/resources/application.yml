@@ -21,6 +21,12 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
 
+# デフォルトHTMLエラー無効化
+server:
+  error:
+    whitelabel:
+      enabled: false
+
 # ログ出力設定
 logging:
   file.name: logs/app.log
