@@ -16,17 +16,18 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
    */
   @Query(
     value = """
-        SELECT
-          b.board_uuid AS boardUuid,
-          b.board_name AS boardName,
-          b.board_owner_id AS boardOwnerId,
-          b.created_at AS boardCreatedAt,
-          COUNT(bm.bm_user_id) OVER (PARTITION BY b.board_id) AS memberCount
-        FROM t_board b
-        LEFT JOIN t_board_member bm
-        ON bm.bm_board_id = b.board_id
-        WHERE bm.bm_user_id = :user_id
-        """,
+      SELECT
+        b.board_uuid AS boardUuid,
+        b.board_name AS boardName,
+        b.board_owner_id AS boardOwnerId,
+        b.created_at AS boardCreatedAt,
+        b.updated_at AS boardUpdatedAt,
+        COUNT(bm.bm_user_id) OVER (PARTITION BY b.board_id) AS memberCount
+      FROM t_board b
+      LEFT JOIN t_board_member bm
+      ON bm.bm_board_id = b.board_id
+      WHERE bm.bm_user_id = :user_id
+    """,
     nativeQuery = true
   )
   List<BoardMenuDto> findBoardInfoList(@Param("user_id") Integer user_id);

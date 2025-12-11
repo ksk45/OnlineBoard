@@ -1,6 +1,6 @@
 package io.github.ksk45.onlineboard.Model.Dto;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +12,8 @@ public class BoardMenuDto {
   private String boardUuid;
   private String boardName;
   private Integer boardOwnerId;
-  private LocalDateTime boardCreatedAt;
-  private Integer memberCount;
+  private Timestamp boardCreatedAt; // nativesqlで取得のため、LocalDateTimeではなくTimestamp
+  private Timestamp boardUpdatedAt; // nativesqlで取得のため、LocalDateTimeではなくTimestamp
+  private Long memberCount;
 
 }

@@ -26,7 +26,7 @@ public class AuthController {
 
   @PostMapping("/sign-up")
   public ResponseEntity<AuthResponseDto> signUp(@Valid @RequestBody SignUpForm signUpForm) {
-    log.info("サインアップapi呼び出し成功");
+    log.debug("サインアップapi呼び出し成功");
     
     // メールアドレス存在チェック
     authService.isEmailExsists(signUpForm.getEmail());
@@ -45,7 +45,7 @@ public class AuthController {
   
   @PostMapping("/sign-in")
   public ResponseEntity<AuthResponseDto> signIn(@Valid @RequestBody SignInForm signInForm) {
-    log.info("サインインapi呼び出し成功");
+    log.debug("サインインapi呼び出し成功");
 
     // ユーザー取得
     User user = authService.getUser(signInForm);
