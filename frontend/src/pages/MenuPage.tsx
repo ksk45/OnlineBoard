@@ -4,30 +4,30 @@ import MenuHeader from "../components/Menu/MenuHeader";
 import NewBoardModal from "../components/Menu/NewBoardModal";
 import UIButton from "../components/ui/UIButton";
 import { useUser } from "../contexts/UserContext";
-import type { Board } from "../types/board/board";
+import type { MenuBoardDto } from "../types/board/MenuBoardDto";
 
 const MenuPage = () => {
   const userContext = useUser();
-  const [boards, setBoards] = useState<Board[]>([]);
+  const [boards, setBoards] = useState<MenuBoardDto[]>([]);
   const [isNewBoard, setIsNewBoard] = useState(false);
 
   // 初期遷移時、GETapi呼び出し
   useEffect(() => {
     // 関数定義: GETapi呼び出し
     const fetchBoardData = async () => {
-      const res = await fetch("/");
+      console.log("get開始");
+      const res = await fetch("/api/menu/");
       
       if (res.ok) {
-        const data: Board[] = await res.json(); // 取得データをBoard型配列としてキャスト
-        setBoards(data);
-        console.log("成功");
+        const data = await res.json();
+        setBoards(data.boardList);
       } else {
         console.log("失敗");
       }
     }
     
     // 関数呼び出し: GETapi呼び出し
-    // fetchBoardData();
+    fetchBoardData();
   }, []);
 
 
@@ -53,9 +53,9 @@ const MenuPage = () => {
         <div className="w-full p-10 grid gap-4 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
           {boards.map((board) => (
             <BoardItem 
-              boardId={ board.boardId }
+              boardId={ board.boardUuid }
               boardName= { board.boardName }
-              collaboratorNum={ board.boardId }
+              collaboratorNum={ board.memberCount }
             />
           ))}
         </div>
