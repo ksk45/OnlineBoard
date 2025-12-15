@@ -5,11 +5,13 @@ import NewBoardModal from "../components/Menu/NewBoardModal";
 import UIButton from "../components/ui/UIButton";
 import { useUser } from "../contexts/UserContext";
 import type { MenuBoardDto } from "../types/board/MenuBoardDto";
+import ErrorModal from "../components/Menu/ErrorModal";
 
 const MenuPage = () => {
   const userContext = useUser();
   const [boards, setBoards] = useState<MenuBoardDto[]>([]);
   const [isNewBoard, setIsNewBoard] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   // 初期遷移時、GETapi呼び出し
   useEffect(() => {
@@ -19,10 +21,11 @@ const MenuPage = () => {
       const res = await fetch("/api/menu/");
       
       if (res.ok) {
+        setIsError(true); // エラー表示をoffに
         const data = await res.json();
         setBoards(data.boardList);
       } else {
-        console.log("失敗");
+        setIsError(true);
       }
     }
     
@@ -63,6 +66,7 @@ const MenuPage = () => {
 
       {/* 「+ New WhiteBoard」押下時のモーダル */}
       <NewBoardModal isOpen={isNewBoard} onClose={() => setIsNewBoard(false)} />
+      <ErrorModal isOpen={isError} />
     </div>
   );
 };
