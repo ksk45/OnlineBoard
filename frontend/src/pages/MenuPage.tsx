@@ -57,9 +57,10 @@ const MenuPage = () => {
         <div className="w-full p-10 grid gap-4 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
           {boards.map((board) => (
             <BoardItem
-              boardId={board.boardUuid}
+              boardUuid={board.boardUuid}
               boardName={board.boardName}
               collaboratorNum={board.memberCount}
+              boardCreatedAt={board.boardCreatedAt}
             />
           ))}
         </div>
