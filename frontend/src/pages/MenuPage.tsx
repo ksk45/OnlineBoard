@@ -19,20 +19,19 @@ const MenuPage = () => {
     const fetchBoardData = async () => {
       console.log("get開始");
       const res = await fetch("/api/menu/");
-      
+
       if (res.ok) {
-        setIsError(true); // エラー表示をoffに
+        setIsError(false); // 初期処理: エラー表示をoffに
         const data = await res.json();
         setBoards(data.boardList);
       } else {
         setIsError(true);
       }
-    }
-    
+    };
+
     // 関数呼び出し: GETapi呼び出し
     fetchBoardData();
   }, []);
-
 
   return (
     <div>
@@ -50,15 +49,17 @@ const MenuPage = () => {
           </div>
         </div>
         <p>現在のユーザー</p>
-        <p>ID: {userContext.user ? userContext.user.userId : "未ログイン"}, 
-          ユーザー名: {userContext.user ? userContext.user.userName : ""}, 
-          メールアドレス: {userContext.user ? userContext.user.email : ""}</p>
+        <p>
+          ID: {userContext.user ? userContext.user.userId : "未ログイン"},
+          ユーザー名: {userContext.user ? userContext.user.userName : ""},
+          メールアドレス: {userContext.user ? userContext.user.email : ""}
+        </p>
         <div className="w-full p-10 grid gap-4 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
           {boards.map((board) => (
-            <BoardItem 
-              boardId={ board.boardUuid }
-              boardName= { board.boardName }
-              collaboratorNum={ board.memberCount }
+            <BoardItem
+              boardId={board.boardUuid}
+              boardName={board.boardName}
+              collaboratorNum={board.memberCount}
             />
           ))}
         </div>
@@ -66,6 +67,7 @@ const MenuPage = () => {
 
       {/* 「+ New WhiteBoard」押下時のモーダル */}
       <NewBoardModal isOpen={isNewBoard} onClose={() => setIsNewBoard(false)} />
+      {/* 初期ロードエラー発生時のエラーモーダル */}
       <ErrorModal isOpen={isError} />
     </div>
   );
